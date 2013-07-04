@@ -1,0 +1,36 @@
+use strict;
+use warnings;
+
+use Graph::Weighted;
+my $g = Graph::Weighted->new();
+
+$g->populate(
+  [ [ 0, 1, 2, 0, 0 ], # Vertex 0 with 5 edges of weight 3
+    [ 1, 0, 3, 0, 0 ], #    "   1        "               4
+    [ 2, 3, 0, 0, 0 ], #    "   2        "               5
+    [ 0, 0, 1, 0, 0 ], #    "   3        "               1
+    [ 0, 0, 0, 0, 0 ], #    "   4        "               0
+  ]
+);
+my $attr = 'probability';
+$g->populate(
+  { 0 => { 1 => 0.4, 3 => 0.6 },
+    1 => { 0 => 0.3, 2 => 0.7 },
+    2 => -3.14, # Terminal value
+    3 => 42,    # Terminal value
+  },
+  $attr
+);
+
+# Show each vertex and its edges.
+for my $v (sort { $a <=> $b } $g->vertices) {
+    warn sprintf "vertex: %s weight=%.2f, %s=%.2f\n",
+        $v, $g->get_weight($v),
+        $attr, $g->get_attr($v, $attr);
+    next if $g->neighbors($v) == 1;
+    for my $n (sort { $a <=> $b } $g->neighbors($v)) {
+        warn sprintf "\tedge to: %s weight=%.2f, %s=%.2f\n",
+            $n, $g->get_weight([$v, $n]),
+            $attr, $g->get_attr([$v, $n], $attr);
+    }
+}

@@ -1,0 +1,40 @@
+Revision history for Graph-Drawing:
+
+0.5301 Aug 8, 2012
+    - Improve documentation.
+    - Test for terminal values.
+
+0.53 Aug 8, 2012
+    - Added dzil helper plugins to dist creation.
+    - Use (and test) both vertex and edge methods!
+    - Fix up POD.
+    - Handle terminal nodes for hash datapoints.
+
+0.5201 May 18, 2012
+    - Made get_attr() return zero if no attribute value is found.
+    - Simplified the example script.
+    - Improved POD.
+
+0.52 May 17, 2012
+    - Removed polar chart examples.
+    - Enabled data hash handling.
+    - Improved POD.
+
+0.51 May 15, 2012
+    - Allow weighting of both edges and vertices.
+
+0.5 May 14, 2012
+    - Starting over with simplified bits and dzil based distribution.
+
+0.0902_1.tar.gz            29-Sep-2004 19:03  3.2K
+0.09.tar.gz                31-Jul-2003 12:18   10K
+0.08.tar.gz                11-Jul-2003 16:43   10K
+0.07.tar.gz                10-Jul-2003 19:16  9.9K
+0.06.tar.gz                10-Jul-2003 09:17  9.0K
+0.05.tar.gz                09-Jul-2003 20:38  8.9K
+0.4.tar.gz                 05-Jul-2003 09:33   59K
+0.3.tar.gz                 04-Jul-2003 19:34   11K
+0.2.tar.gz                 04-Jul-2003 16:50   12K
+0.01.2.tar.gz              04-Jul-2003 13:16  7.4K
+0.01.1.tar.gz              04-Jul-2003 08:39  7.4K
+0.01.tar.gz                03-Jul-2003 17:37  7.2K
