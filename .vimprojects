@@ -1,0 +1,14 @@
+GW=~/dev/Math/Graph-Weighted CD=. {
+ lib=lib/Graph {
+  Weighted.pm
+ }
+ t=t {
+  00-load.t
+  01-populate.t
+ }
+ eg=eg {
+  synopsis
+ }
+ Changes
+ dist.ini
+}
