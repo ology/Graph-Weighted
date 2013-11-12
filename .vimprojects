@@ -11,4 +11,5 @@ GW=~/dev/Math/Graph-Weighted CD=. {
  }
  Changes
  dist.ini
+ README.md
 }
