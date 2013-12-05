@@ -63,7 +63,7 @@ attribute handling (e.g. weight).  As such, all of the L<Graph> methods may be
 used as documented, but with the addition of custom weighting.
 
 The built-in weighted node and edges can be defined literally, in a matrix or
-hash, or as callbacks to functions that return matricies or hashes based on the
+hash, or as callbacks to functions that return matrices or hashes based on the
 provided data.
 
 =head1 METHODS
@@ -129,7 +129,7 @@ update.  For example, a percentage wight might be defined as:
 
 The default edge weighting function (C<edge_method>) simply returns the value in
 the node's neighbor position.  Likewise, an alternative may be provided, as a
-callaback, as with the C<vertex_weight_function>.  For example:
+callback, as with the C<vertex_weight_function>.  For example:
 
   sub edge_weight_function {
     my ($weight, $attribute);
