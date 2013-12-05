@@ -1,7 +1,8 @@
 package Graph::Weighted;
+
 # ABSTRACT: A weighted graph implementation
 
-our $VERSION = '0.5301';
+our $VERSION = '0.5302';
 
 use warnings;
 use strict;
@@ -19,8 +20,6 @@ Graph::Weighted - A weighted graph implementation
 
   use Graph::Weighted;
 
-  # Vertex 0 has 5 edges of weight 3 units. The edges to nodes 1 and 2
-  # each weigh 1 and 2 units, respectively.
   $g->populate([
     [ 0, 1, 2, 0, 0 ], # V 0
     [ 1, 0, 3, 0, 0 ], # V 1
@@ -30,6 +29,7 @@ Graph::Weighted - A weighted graph implementation
   ]);
 
   my $attr = 'magnitude';
+
   # Vertex 0 has 2 edges (1,3) of magnitude (4,6).
   $g->populate({
       0 => { 1 => 4, 3 => 6 },
@@ -45,8 +45,9 @@ Graph::Weighted - A weighted graph implementation
     printf "vertex: %s weight=%.2f, %s=%.2f\n",
         $v,    $g->get_weight($v),
         $attr, $g->get_attr($v, $attr);
-    # TODO Skip ...what? Why?
+
     next if $g->neighbors($v) == 1;
+
     # Show each (numeric) edge.
     for my $n (sort { $a <=> $b } $g->neighbors($v)) {
         printf "\tedge to: %s weight=%.2f, %s=%.2f\n",
@@ -57,13 +58,19 @@ Graph::Weighted - A weighted graph implementation
 
 =head1 DESCRIPTION
 
-A C<Graph::Weighted> object is a subclass of the L<Graph> module with the added
-benefit of built-in, multiple layers of weighted attributes.  As such, all of
-the L<Graph> methods may be used as documented.
+A C<Graph::Weighted> object is a subclass of the L<Graph> module with concise
+attribute handling (e.g. weight).  As such, all of the L<Graph> methods may be
+used as documented.
+
+The built-in weighted node and edges can be defined literally, in a matrix or a
+hash, or as callbacks to functions that return matricies or hashes based on the
+provided data.
 
 =head1 METHODS
 
 =head2 new()
+
+  my $g = Graph::Weighted->new;
 
 Return a new C<Graph::Weighted> object.
 
@@ -80,10 +87,10 @@ sub new {
 
 =head2 populate()
 
-  $g->populate(\@vectors)
-  $g->populate(\@vectors, $attribute)
-  $g->populate(\%data_points, $attribute)
-  $g->populate($data, $attribute, \&vertex_method, \&edge_method)
+  $g->populate(\@vectors);
+  $g->populate(\@vectors, $attribute);
+  $g->populate(\%data_points, $attribute);
+  $g->populate($data, $attribute, \&vertex_method, \&edge_method);
 
 Populate a graph with weighted nodes.
 
@@ -103,15 +110,17 @@ C<edge> methods:
   [0,1,9] 3 vertices and 3 edges having edge weights 0,1,9 and vertex weight 10.
 
 An edge weight of zero can mean anything you wish.  If weights are seen as
-conversation among associates, "In the same room" might be a good analogy.
+conversation among associates, "In the same room" might be a good analogy, a
+value of zero would mean "no conversation."
 
 The C<attribute> is named 'weight' by default, but can be anything you like.
-Multiple attributes may be applied to a graph, thereby layering node values.
+Multiple attributes may be applied to a graph, thereby layering increasing the
+overall dimension.
 
 The default vertex weighting function (C<vertex_method>) is a simple sum of
 the neighbor weights.  An alternative may be provided and should accept the
 current node weight, current weight total and the attribute as arguments to
-update.  For example:
+update.  For example, a percentage wight might be defined as:
 
   sub vertex_weight_function {
     my ($current_node_weight, $current_weight_total, $attribute);
@@ -119,9 +128,8 @@ update.  For example:
   }
 
 The default edge weighting function (C<edge_method>) simply returns the value in
-the node's neighbor position.  An alternative may be provided, as a subroutine
-reference, which should accept the current edge weight and the attribute to
-update.  For example:
+the node's neighbor position.  Likewise, an alternative may be provided, as a
+callaback, as with the C<vertex_weight_function>.  For example:
 
   sub edge_weight_function {
     my ($weight, $attribute);
@@ -294,30 +302,18 @@ __END__
 
 =head1 TO DO
 
-Accept hashrefs and C<Matrix::*> objects instead of just LoLs.  
+Accept C<Matrix::*> objects.  
 
-L<Statistics::Descriptive::Weighted> must be investigates...
+L<Statistics::Descriptive::Weighted> must be investigated...
 
-Find the heaviest and lightest nodes.
+Find the heaviest and lightest nodes and edges.
 
-Find the total weight beneath a node.
+Find the total weight beneath (and above?) a node.
 
 =head1 SEE ALSO
 
 L<Graph>
 
-The F<eg/> and F<t/*> sources.
-
-=head1 AUTHOR
-
-Gene Boggs, E<lt>gene@cpan.orgE<gt>
-
-=head1 LICENSE AND COPYRIGHT
-
-Copyright 2003-2012 Gene Boggs
-
-This program is free software; you can redistribute it and/or modify it under
-the terms of either: the GNU General Public License as published by the Free
-Software Foundation; or the Artistic License.
+The F<eg/*> and F<t/*> file sources.
 
 =cut
