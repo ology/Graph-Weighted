@@ -60,9 +60,9 @@ Graph::Weighted - A weighted graph implementation
 
 A C<Graph::Weighted> object is a subclass of the L<Graph> module with concise
 attribute handling (e.g. weight).  As such, all of the L<Graph> methods may be
-used as documented.
+used as documented, but with the addition of custom weighting.
 
-The built-in weighted node and edges can be defined literally, in a matrix or a
+The built-in weighted node and edges can be defined literally, in a matrix or
 hash, or as callbacks to functions that return matricies or hashes based on the
 provided data.
 
