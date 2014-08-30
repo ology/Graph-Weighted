@@ -2,7 +2,7 @@ package Graph::Weighted;
 
 # ABSTRACT: A weighted graph implementation
 
-our $VERSION = '0.5302';
+our $VERSION = '0.5303';
 
 use warnings;
 use strict;
@@ -11,10 +11,6 @@ use base qw(Graph);
 
 use constant DEBUG  => 0;
 use constant WEIGHT => 'weight';
-
-=head1 NAME
-
-Graph::Weighted - A weighted graph implementation
 
 =head1 SYNOPSIS
 
