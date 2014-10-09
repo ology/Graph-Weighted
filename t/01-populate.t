@@ -1,5 +1,8 @@
-#!perl
-use Test::More 'no_plan';
+#!/usr/bin/env perl
+use strict;
+use warnings;
+
+use Test::More;
 
 BEGIN {
     use constant GW => 'Graph::Weighted';
@@ -139,6 +142,8 @@ for my $data (@$weight_dataset) {
     is $g_weight, $w, "weight: $g_weight = $w";
     $n++;
 }
+
+done_testing();
 
 # Return total sum of a 2D numeric value data structure.
 sub _weight_of {
