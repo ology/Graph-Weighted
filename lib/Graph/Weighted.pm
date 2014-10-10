@@ -300,11 +300,9 @@ __END__
 
 Accept C<Matrix::*> objects.  
 
-L<Statistics::Descriptive::Weighted> must be investigated...
+Find the heaviest and lightest nodes and edges?
 
-Find the heaviest and lightest nodes and edges.
-
-Find the total weight beneath (and above?) a node.
+Find the total weight beneath and above a node.
 
 =head1 SEE ALSO
 
