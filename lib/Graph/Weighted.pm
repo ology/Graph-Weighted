@@ -17,7 +17,7 @@ Readonly my $WEIGHT => 'weight';
 
   use Graph::Weighted;
 
-  # Populate as an array
+  # Populate with an array
   $g->populate([
     [ 0, 1, 2, 0, 0 ], # Vertex 0 with two edges
     [ 1, 0, 3, 0, 0 ], # V 1
@@ -26,7 +26,7 @@ Readonly my $WEIGHT => 'weight';
     [ 0, 0, 0, 0, 0 ], # V 4 exists but weighs nothing
   ]);
 
-  # Populate as a hash with an additional attribute
+  # Populate with a hash, with an additional attribute
   my $attr = 'magnitude';
 
   # Vertex 0 has 2 edges names (1,3) of magnitude (4,6)
