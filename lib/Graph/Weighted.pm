@@ -15,45 +15,44 @@ Readonly my $WEIGHT => 'weight';
 
 =head1 SYNOPSIS
 
-  use Graph::Weighted;
+ use Graph::Weighted;
 
-  # Populate with an array
-  $g->populate([
-    [ 0, 1, 2, 0, 0 ], # Vertex 0 with two edges
-    [ 1, 0, 3, 0, 0 ], # V 1
-    [ 2, 3, 0, 0, 0 ], # V 2
-    [ 0, 0, 1, 0, 0 ], # V 3 with one edge weighing one unit
-    [ 0, 0, 0, 0, 0 ], # V 4 exists but weighs nothing
-  ]);
+ my $gw = Graph::Weighted->new();
+ $gw->populate(
+  [ [ 0, 1, 2, 0, 0 ], # Vertex 0 with 5 edges of weight 3
+    [ 1, 0, 3, 0, 0 ], #    "   1        "               4
+    [ 2, 3, 0, 0, 0 ], #    "   2        "               5
+    [ 0, 0, 1, 0, 0 ], #    "   3        "               1
+    [ 0, 0, 0, 0, 0 ], #    "   4        "               0
+  ]
+ );
+ # Show the weight for each vertex and its edges
+ for my $vertex (sort { $a <=> $b } $gw->vertices) {
+    warn sprintf "vertex: %s weight=%.2f\n",
+        $vertex, $gw->get_weight($vertex);
+    for my $neighbor (sort { $a <=> $b } $gw->neighbors($vertex)) {
+        warn sprintf "\tedge to: %s weight=%.2f\n",
+            $neighbor, $gw->get_weight([$vertex, $neighbor]);
+    }
+ }
 
-  # Populate with a hash, with an additional attribute
-  my $attr = 'magnitude';
-
-  # Vertex 0 has 2 edges names (1,3) of magnitude (4,6)
-  $g->populate({
-      0 => { 1 => 4, 3 => 6 },
-      1 => { 0 => 3, 2 => 7 },
-      2 => 8, # Terminal value
-      3 => 9, # Terminal value
+ my $gw = Graph::Weighted->new();
+ my $attr = 'probability';
+ $gw->populate(
+    {
+        0 => { 1 => 0.4, 3 => 0.6 },
+        1 => { 0 => 0.3, 2 => 0.7 },
     },
     $attr
-  );
-
-  # Show each vertex
-  for my $v (sort { $a <=> $b } $g->vertices) {
-    printf "vertex: %s weight=%.2f, %s=%.2f\n",
-        $v,    $g->get_weight($v),
-        $attr, $g->get_attr($v, $attr);
-
-    next if $g->neighbors($v) == 1;
-
-    # Show each edge
-    for my $n (sort { $a <=> $b } $g->neighbors($v)) {
-        printf "\tedge to: %s weight=%.2f, %s=%.2f\n",
-            $n,    $g->get_weight([$v, $n]),
-            $attr, $g->get_attr([$v, $n], $attr);
+ );
+ for my $vertex (sort { $a <=> $b } $gw->vertices) {
+    warn sprintf "vertex: %s %s=%.2f\n",
+        $vertex, $attr, $gw->get_attr($vertex, $attr);
+    for my $neighbor (sort { $a <=> $b } $gw->neighbors($vertex)) {
+        warn sprintf "\tedge to: %s %s=%.2f\n",
+            $neighbor, $attr, $gw->get_attr([$vertex, $neighbor], $attr);
     }
-  }
+ }
 
 =head1 DESCRIPTION
 
