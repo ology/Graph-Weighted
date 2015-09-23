@@ -7,10 +7,11 @@ our $VERSION = '0.5303';
 use warnings;
 use strict;
 
-use base qw(Graph);
+use parent qw(Graph);
 
-use constant DEBUG  => 0;
-use constant WEIGHT => 'weight';
+use Readonly;
+Readonly my $DEBUG  => 0;
+Readonly my $WEIGHT => 'weight';
 
 =head1 SYNOPSIS
 
@@ -136,10 +137,10 @@ callback, as with the C<vertex_weight_function>.  For example:
 
 sub populate {
     my ($self, $data, $attr, $vertex_method, $edge_method) = @_;
-    warn "populate(): $data\n" if DEBUG;
+    warn "populate(): $data\n" if $DEBUG;
 
     # Set the default attribute.
-    $attr ||= WEIGHT;
+    $attr ||= $WEIGHT;
 
     # What type of data are we given?
     my $data_ref = ref $data;
@@ -147,7 +148,7 @@ sub populate {
     if ($data_ref eq 'ARRAY') {
         my $vertex = 0; # Initial vertex id.
         for my $neighbors (@$data) {
-            warn "Neighbors of $vertex: [@$neighbors]\n" if DEBUG;
+            warn "Neighbors of $vertex: [@$neighbors]\n" if $DEBUG;
             $self->_add_weighted_edges_from_array(
                 $vertex, $neighbors, $attr, $vertex_method, $edge_method
             );
@@ -156,7 +157,7 @@ sub populate {
     }
     elsif ($data_ref eq 'HASH') {
         for my $vertex (keys %$data) {
-            warn "Neighbors of $vertex: [", join(' ', values %{$data->{$vertex}}), "]\n" if DEBUG && ref $vertex;
+            warn "Neighbors of $vertex: [", join(' ', values %{$data->{$vertex}}), "]\n" if $DEBUG && ref $vertex;
             $self->_add_weighted_edges_from_hash(
                 $vertex, $data->{$vertex}, $attr, $vertex_method, $edge_method
             );
@@ -169,7 +170,7 @@ sub populate {
 
 sub _add_weighted_edges_from_array {
     my ($self, $vertex, $neighbors, $attr, $vertex_method, $edge_method) = @_;
-    warn "add_weighted_edges(): $vertex, $neighbors, $attr\n" if DEBUG;
+    warn "add_weighted_edges(): $vertex, $neighbors, $attr\n" if $DEBUG;
 
     # Initial vertex weight
     my $vertex_weight = 0;
@@ -184,7 +185,7 @@ sub _add_weighted_edges_from_array {
 
         # Set the weight of the edge.
         my $edge_weight = _compute_edge_weight($w, $attr, $edge_method);
-        warn "Edge: $vertex -($edge_weight)-> $n\n" if DEBUG;
+        warn "Edge: $vertex -($edge_weight)-> $n\n" if $DEBUG;
         $self->set_edge_attribute($vertex, $n, $attr, $edge_weight);
 
         # Tally the weight of the vertex.
@@ -192,13 +193,13 @@ sub _add_weighted_edges_from_array {
     }
 
     # Set the weight of the graph node.
-    warn "Vertex $vertex $attr = $vertex_weight\n" if DEBUG;
+    warn "Vertex $vertex $attr = $vertex_weight\n" if $DEBUG;
     $self->set_vertex_attribute($vertex, $attr, $vertex_weight);
 }
 
 sub _add_weighted_edges_from_hash {
     my ($self, $vertex, $neighbors, $attr, $method) = @_;
-    warn "add_weighted_edges(): $vertex, $neighbors, $attr\n" if DEBUG;
+    warn "add_weighted_edges(): $vertex, $neighbors, $attr\n" if $DEBUG;
 
     # Initial vertex weight
     my $vertex_weight = 0;
@@ -214,7 +215,7 @@ sub _add_weighted_edges_from_hash {
 
             # Set the weight of the edge.
             my $edge_weight = _compute_edge_weight($w, $attr, $method);
-            warn "Edge: $vertex -($edge_weight)-> $n\n" if DEBUG;
+            warn "Edge: $vertex -($edge_weight)-> $n\n" if $DEBUG;
             $self->set_edge_attribute($vertex, $n, $attr, $edge_weight);
 
             # Tally the weight of the vertex.
@@ -226,13 +227,13 @@ sub _add_weighted_edges_from_hash {
     }
 
     # Set the weight of the graph node.
-    warn "Vertex $vertex $attr = $vertex_weight\n" if DEBUG;
+    warn "Vertex $vertex $attr = $vertex_weight\n" if $DEBUG;
     $self->set_vertex_attribute($vertex, $attr, $vertex_weight);
 }
 
 sub _compute_edge_weight {
     my ($weight, $attr, $method) = @_;
-    warn "compute_edge_weight(): $attr $weight\n" if DEBUG;
+    warn "compute_edge_weight(): $attr $weight\n" if $DEBUG;
 
     # Call the weight function if one is given.
     return $method->($weight, $attr) if $method and ref $method eq 'CODE';
@@ -243,7 +244,7 @@ sub _compute_edge_weight {
 
 sub _compute_vertex_weight {
     my ($weight, $current, $attr, $method) = @_;
-    warn "compute_vertex_weight(): $attr $weight, $current\n" if DEBUG;
+    warn "compute_vertex_weight(): $attr $weight, $current\n" if $DEBUG;
 
     # Call the weight function if one is given.
     return $method->($weight, $current, $attr) if $method and ref $method eq 'CODE';
@@ -283,8 +284,8 @@ sub get_attr {
     die 'ERROR: No vertex given to get_attr()' unless defined $v;
 
     # Default to weight.
-    $attr ||= WEIGHT;
-    warn "get_attr($v, $attr)\n" if DEBUG;
+    $attr ||= $WEIGHT;
+    warn "get_attr($v, $attr)\n" if $DEBUG;
 
     # Return the edge attribute if given a list.
     return $self->get_edge_attribute(@$v, $attr) || 0 if ref $v eq 'ARRAY';
