@@ -17,17 +17,19 @@ Readonly my $WEIGHT => 'weight';
 
   use Graph::Weighted;
 
+  # Populate as an array
   $g->populate([
-    [ 0, 1, 2, 0, 0 ], # V 0
+    [ 0, 1, 2, 0, 0 ], # Vertex 0 with two edges
     [ 1, 0, 3, 0, 0 ], # V 1
     [ 2, 3, 0, 0, 0 ], # V 2
-    [ 0, 0, 1, 0, 0 ], # One lonely edge weighing one lonely unit.
-    [ 0, 0, 0, 0, 0 ], # V 4 weighs nothing.
+    [ 0, 0, 1, 0, 0 ], # V 3 with one edge weighing one unit
+    [ 0, 0, 0, 0, 0 ], # V 4 exists but weighs nothing
   ]);
 
+  # Populate as a hash with an additional attribute
   my $attr = 'magnitude';
 
-  # Vertex 0 has 2 edges (1,3) of magnitude (4,6).
+  # Vertex 0 has 2 edges names (1,3) of magnitude (4,6)
   $g->populate({
       0 => { 1 => 4, 3 => 6 },
       1 => { 0 => 3, 2 => 7 },
@@ -37,7 +39,7 @@ Readonly my $WEIGHT => 'weight';
     $attr
   );
 
-  # Show each (numeric) vertex.
+  # Show each vertex
   for my $v (sort { $a <=> $b } $g->vertices) {
     printf "vertex: %s weight=%.2f, %s=%.2f\n",
         $v,    $g->get_weight($v),
@@ -45,7 +47,7 @@ Readonly my $WEIGHT => 'weight';
 
     next if $g->neighbors($v) == 1;
 
-    # Show each (numeric) edge.
+    # Show each edge
     for my $n (sort { $a <=> $b } $g->neighbors($v)) {
         printf "\tedge to: %s weight=%.2f, %s=%.2f\n",
             $n,    $g->get_weight([$v, $n]),
