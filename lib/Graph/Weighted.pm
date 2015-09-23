@@ -55,9 +55,9 @@ Readonly my $WEIGHT => 'weight';
 
 =head1 DESCRIPTION
 
-A C<Graph::Weighted> object is a subclass of the L<Graph> module with concise
-attribute handling (e.g. weight).  As such, all of the L<Graph> methods may be
-used as documented, but with the addition of custom weighting.
+A C<Graph::Weighted> object is a subclass of the L<Graph> module with 
+attribute handling.  As such, all of the L<Graph> methods may be used
+as documented, but with the addition of custom weighting.
 
 The built-in weighted node and edges can be defined literally, in a matrix or
 hash, or as callbacks to functions that return matrices or hashes based on the
@@ -117,7 +117,7 @@ overall dimension.
 The default vertex weighting function (C<vertex_method>) is a simple sum of
 the neighbor weights.  An alternative may be provided and should accept the
 current node weight, current weight total and the attribute as arguments to
-update.  For example, a percentage wight might be defined as:
+update.  For example, a percentage weight might be defined as:
 
   sub vertex_weight_function {
     my ($current_node_weight, $current_weight_total, $attribute);
@@ -129,7 +129,7 @@ the node's neighbor position.  Likewise, an alternative may be provided, as a
 callback, as with the C<vertex_weight_function>.  For example:
 
   sub edge_weight_function {
-    my ($weight, $attribute);
+    my ($current_node_weight, $current_weight_total, $attribute);
     return $current_weight_total / $current_node_weight;
   }
 
