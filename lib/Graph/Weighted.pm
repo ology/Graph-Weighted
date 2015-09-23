@@ -19,14 +19,13 @@ Readonly my $WEIGHT => 'weight';
 
  my $gw = Graph::Weighted->new();
  $gw->populate(
-  [ [ 0, 1, 2, 0, 0 ], # Vertex 0 with 5 edges of weight 3
-    [ 1, 0, 3, 0, 0 ], #    "   1        "               4
-    [ 2, 3, 0, 0, 0 ], #    "   2        "               5
-    [ 0, 0, 1, 0, 0 ], #    "   3        "               1
-    [ 0, 0, 0, 0, 0 ], #    "   4        "               0
-  ]
+    [ [ 0, 1, 2, 0, 0 ], # Vertex 0 with 5 edges of weight 3
+      [ 1, 0, 3, 0, 0 ], #    "   1        "               4
+      [ 2, 3, 0, 0, 0 ], #    "   2        "               5
+      [ 0, 0, 1, 0, 0 ], #    "   3        "               1
+      [ 0, 0, 0, 0, 0 ], #    "   4        "               0
+    ]
  );
- # Show the weight for each vertex and its edges
  for my $vertex (sort { $a <=> $b } $gw->vertices) {
     warn sprintf "vertex: %s weight=%.2f\n",
         $vertex, $gw->get_weight($vertex);
