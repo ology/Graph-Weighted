@@ -12,11 +12,9 @@ $gw->populate(
     [ 0, 0, 0, 0, 0 ], #    "   4        "               0
   ]
 );
-# Show the weight for each vertex and its edges
 for my $vertex (sort { $a <=> $b } $gw->vertices) {
     warn sprintf "vertex: %s weight=%.2f\n",
         $vertex, $gw->get_weight($vertex);
-    next if $gw->neighbors($vertex) == 1;
     for my $neighbor (sort { $a <=> $b } $gw->neighbors($vertex)) {
         warn sprintf "\tedge to: %s weight=%.2f\n",
             $neighbor, $gw->get_weight([$vertex, $neighbor]);
