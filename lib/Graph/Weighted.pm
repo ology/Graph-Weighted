@@ -2,7 +2,7 @@ package Graph::Weighted;
 
 # ABSTRACT: A weighted graph implementation
 
-our $VERSION = '0.5303';
+our $VERSION = '0.54';
 
 use warnings;
 use strict;
