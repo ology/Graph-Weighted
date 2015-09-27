@@ -159,13 +159,11 @@ sub _add_weighted_edges_from_array {
         # Add a node-node edge to the graph.
         $self->add_edge($vertex, $n);
 
-        # Set the weight of the edge.
-        my $edge_weight = _compute_edge_weight($w, $attr);
-        warn "Edge: $vertex -($edge_weight)-> $n\n" if $DEBUG;
-        $self->set_edge_attribute($vertex, $n, $attr, $edge_weight);
+        warn "Edge: $vertex -($w)-> $n\n" if $DEBUG;
+        $self->set_edge_attribute($vertex, $n, $attr, $w);
 
         # Tally the weight of the vertex.
-        $vertex_weight = _compute_vertex_weight($w, $vertex_weight, $attr);
+        $vertex_weight += $w;
     }
 
     # Set the weight of the graph node.
@@ -189,13 +187,11 @@ sub _add_weighted_edges_from_hash {
             # Add a node-node edge to the graph.
             $self->add_edge($vertex, $n);
 
-            # Set the weight of the edge.
-            my $edge_weight = _compute_edge_weight($w, $attr);
-            warn "Edge: $vertex -($edge_weight)-> $n\n" if $DEBUG;
-            $self->set_edge_attribute($vertex, $n, $attr, $edge_weight);
+            warn "Edge: $vertex -($w)-> $n\n" if $DEBUG;
+            $self->set_edge_attribute($vertex, $n, $attr, $w);
 
             # Tally the weight of the vertex.
-            $vertex_weight = _compute_vertex_weight($w, $vertex_weight, $attr);
+            $vertex_weight += $w;
         }
     }
     else {
@@ -205,22 +201,6 @@ sub _add_weighted_edges_from_hash {
     # Set the weight of the graph node.
     warn "Vertex $vertex $attr = $vertex_weight\n" if $DEBUG;
     $self->set_vertex_attribute($vertex, $attr, $vertex_weight);
-}
-
-sub _compute_edge_weight {
-    my ($weight, $attr) = @_;
-    warn "compute_edge_weight(): $attr $weight\n" if $DEBUG;
-
-    # Increment the current value by the node weight if no weight function is given.
-    return $weight;
-}
-
-sub _compute_vertex_weight {
-    my ($weight, $current, $attr) = @_;
-    warn "compute_vertex_weight(): $attr $weight, $current\n" if $DEBUG;
-
-    # Increment the current value by the node weight if no weight function is given.
-    return $weight + $current;
 }
 
 =head2 get_weight()
