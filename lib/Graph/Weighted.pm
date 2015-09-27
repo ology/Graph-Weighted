@@ -83,7 +83,6 @@ sub new {
   $g->populate(\@vectors);
   $g->populate(\@vectors, $attribute);
   $g->populate(\%data_points, $attribute);
-  $g->populate($data, $attribute, \&vertex_method, \&edge_method);
 
 Populate a graph with weighted nodes.
 
@@ -110,29 +109,10 @@ The C<attribute> is named 'weight' by default, but can be anything you like.
 Multiple attributes may be applied to a graph, thereby layering increasing the
 overall dimension.
 
-The default vertex weighting function (C<vertex_method>) is a simple sum of
-the neighbor weights.  An alternative may be provided and should accept the
-current node weight, current weight total and the attribute as arguments to
-update.  For example, a percentage weight might be defined as:
-
-  sub vertex_weight_function {
-    my ($current_node_weight, $current_weight_total, $attribute);
-    return $current_node_weight / $current_weight_total;
-  }
-
-The default edge weighting function (C<edge_method>) simply returns the value in
-the node's neighbor position.  Likewise, an alternative may be provided, as a
-callback, as with the C<vertex_weight_function>.  For example:
-
-  sub edge_weight_function {
-    my ($current_node_weight, $current_weight_total, $attribute);
-    return $current_weight_total / $current_node_weight;
-  }
-
 =cut
 
 sub populate {
-    my ($self, $data, $attr, $vertex_method, $edge_method) = @_;
+    my ($self, $data, $attr) = @_;
     warn "populate(): $data\n" if $DEBUG;
 
     # Set the default attribute.
@@ -146,7 +126,7 @@ sub populate {
         for my $neighbors (@$data) {
             warn "Neighbors of $vertex: [@$neighbors]\n" if $DEBUG;
             $self->_add_weighted_edges_from_array(
-                $vertex, $neighbors, $attr, $vertex_method, $edge_method
+                $vertex, $neighbors, $attr
             );
             $vertex++; # Move on to the next vertex...
         }
@@ -155,7 +135,7 @@ sub populate {
         for my $vertex (keys %$data) {
             warn "Neighbors of $vertex: [", join(' ', values %{$data->{$vertex}}), "]\n" if $DEBUG && ref $vertex;
             $self->_add_weighted_edges_from_hash(
-                $vertex, $data->{$vertex}, $attr, $vertex_method, $edge_method
+                $vertex, $data->{$vertex}, $attr
             );
         }
     }
@@ -165,7 +145,7 @@ sub populate {
 }
 
 sub _add_weighted_edges_from_array {
-    my ($self, $vertex, $neighbors, $attr, $vertex_method, $edge_method) = @_;
+    my ($self, $vertex, $neighbors, $attr) = @_;
     warn "add_weighted_edges(): $vertex, $neighbors, $attr\n" if $DEBUG;
 
     # Initial vertex weight
@@ -180,12 +160,12 @@ sub _add_weighted_edges_from_array {
         $self->add_edge($vertex, $n);
 
         # Set the weight of the edge.
-        my $edge_weight = _compute_edge_weight($w, $attr, $edge_method);
+        my $edge_weight = _compute_edge_weight($w, $attr);
         warn "Edge: $vertex -($edge_weight)-> $n\n" if $DEBUG;
         $self->set_edge_attribute($vertex, $n, $attr, $edge_weight);
 
         # Tally the weight of the vertex.
-        $vertex_weight = _compute_vertex_weight($w, $vertex_weight, $attr, $vertex_method);
+        $vertex_weight = _compute_vertex_weight($w, $vertex_weight, $attr);
     }
 
     # Set the weight of the graph node.
@@ -194,7 +174,7 @@ sub _add_weighted_edges_from_array {
 }
 
 sub _add_weighted_edges_from_hash {
-    my ($self, $vertex, $neighbors, $attr, $method) = @_;
+    my ($self, $vertex, $neighbors, $attr) = @_;
     warn "add_weighted_edges(): $vertex, $neighbors, $attr\n" if $DEBUG;
 
     # Initial vertex weight
@@ -210,12 +190,12 @@ sub _add_weighted_edges_from_hash {
             $self->add_edge($vertex, $n);
 
             # Set the weight of the edge.
-            my $edge_weight = _compute_edge_weight($w, $attr, $method);
+            my $edge_weight = _compute_edge_weight($w, $attr);
             warn "Edge: $vertex -($edge_weight)-> $n\n" if $DEBUG;
             $self->set_edge_attribute($vertex, $n, $attr, $edge_weight);
 
             # Tally the weight of the vertex.
-            $vertex_weight = _compute_vertex_weight($w, $vertex_weight, $attr, $method);
+            $vertex_weight = _compute_vertex_weight($w, $vertex_weight, $attr);
         }
     }
     else {
@@ -228,22 +208,16 @@ sub _add_weighted_edges_from_hash {
 }
 
 sub _compute_edge_weight {
-    my ($weight, $attr, $method) = @_;
+    my ($weight, $attr) = @_;
     warn "compute_edge_weight(): $attr $weight\n" if $DEBUG;
-
-    # Call the weight function if one is given.
-    return $method->($weight, $attr) if $method and ref $method eq 'CODE';
 
     # Increment the current value by the node weight if no weight function is given.
     return $weight;
 }
 
 sub _compute_vertex_weight {
-    my ($weight, $current, $attr, $method) = @_;
+    my ($weight, $current, $attr) = @_;
     warn "compute_vertex_weight(): $attr $weight, $current\n" if $DEBUG;
-
-    # Call the weight function if one is given.
-    return $method->($weight, $current, $attr) if $method and ref $method eq 'CODE';
 
     # Increment the current value by the node weight if no weight function is given.
     return $weight + $current;
