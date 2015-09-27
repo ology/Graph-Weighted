@@ -59,10 +59,6 @@ A C<Graph::Weighted> object is a subclass of the L<Graph> module with
 attribute handling.  As such, all of the L<Graph> methods may be used
 as documented, but with the addition of custom weighting.
 
-The built-in weighted node and edges can be defined literally, in a matrix or
-hash, or as callbacks to functions that return matrices or hashes based on the
-provided data.
-
 =head1 METHODS
 
 =head2 new()
@@ -71,7 +67,7 @@ provided data.
 
 Return a new C<Graph::Weighted> object.
 
-Please see L<Graph> for the myriad possible constructor arguments.
+Please see L<Graph> for the possible constructor arguments.
 
 =cut
 
