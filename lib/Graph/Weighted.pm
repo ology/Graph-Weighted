@@ -19,11 +19,11 @@ Readonly my $WEIGHT => 'weight';
 
  my $gw = Graph::Weighted->new();
  $gw->populate(
-    [ [ 0, 1, 2, 0, 0 ], # Vertex 0 with 5 edges of weight 3
-      [ 1, 0, 3, 0, 0 ], #    "   1        "               4
-      [ 2, 3, 0, 0, 0 ], #    "   2        "               5
-      [ 0, 0, 1, 0, 0 ], #    "   3        "               1
-      [ 0, 0, 0, 0, 0 ], #    "   4        "               0
+    [ [ 0, 1, 2, 0, 0 ], # Vertex 0 with 2 edges of weight 3
+      [ 1, 0, 3, 0, 0 ], #    "   1      2 "               4
+      [ 2, 3, 0, 0, 0 ], #    "   2      2 "               5
+      [ 0, 0, 1, 0, 0 ], #    "   3      1 "               1
+      [ 0, 0, 0, 0, 0 ], #    "   4      0
     ]
  );
  for my $vertex (sort { $a <=> $b } $gw->vertices) {
@@ -39,8 +39,8 @@ Readonly my $WEIGHT => 'weight';
  my $attr = 'probability';
  $gw->populate(
     {
-        0 => { 1 => 0.4, 3 => 0.6 },
-        1 => { 0 => 0.3, 2 => 0.7 },
+        0 => { 1 => 0.4, 3 => 0.6 }, # Vertex 0 with 2 edges of weight 1
+        1 => { 0 => 0.3, 2 => 0.7 }, # Vertex 1 with 2 edges of weight 1
     },
     $attr
  );
