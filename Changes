@@ -2,8 +2,9 @@ Revision history for Graph-Weighted:
 
 {{$NEXT}}
     - Replaced constant with Readonly and base with parent.
-    - Improved POD
-    - Removed the confusing vertex_method and edge_method logic.
+    - Improved documentation.
+    - Removed the confusing and unnecessary vertex_method and
+      edge_method logic.
 
 0.5303 2014-08-30
     - Improved documentation!
