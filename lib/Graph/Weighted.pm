@@ -121,7 +121,7 @@ sub populate {
     # What type of data are we given?
     my $data_ref = ref $data;
 
-    if ($data_ref eq 'ARRAY') {
+    if ($data_ref eq 'ARRAY' || $data_ref eq 'Math::Matrix') {
         my $vertex = 0; # Initial vertex id.
         for my $neighbors (@$data) {
             warn "Neighbors of $vertex: [@$neighbors]\n" if $DEBUG;
@@ -248,8 +248,6 @@ sub get_attr {
 __END__
 
 =head1 TO DO
-
-Accept C<Matrix::*> objects.  
 
 Find the heaviest and lightest nodes and edges?
 
