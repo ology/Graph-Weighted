@@ -1,6 +1,8 @@
 Revision history for Graph-Weighted:
 
 {{$NEXT}}
+
+0.54  2015-09-30
     - Replaced constant with Readonly and base with parent.
     - Improved documentation.
     - Removed the confusing and unnecessary vertex_method and
