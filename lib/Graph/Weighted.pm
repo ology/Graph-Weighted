@@ -23,7 +23,7 @@ Readonly my $WEIGHT => 'weight';
       [ 1, 0, 3, 0, 0 ], #    "   1      2 "               4
       [ 2, 3, 0, 0, 0 ], #    "   2      2 "               5
       [ 0, 0, 1, 0, 0 ], #    "   3      1 "               1
-      [ 0, 0, 0, 0, 0 ], #    "   4      0
+      [ 0, 0, 0, 0, 0 ], #    "   4      0 "               0
     ]
  );
  for my $vertex (sort { $a <=> $b } $gw->vertices) {
@@ -40,7 +40,9 @@ Readonly my $WEIGHT => 'weight';
  $gw->populate(
     {
         0 => { 1 => 0.4, 3 => 0.6 }, # Vertex 0 with 2 edges of weight 1
-        1 => { 0 => 0.3, 2 => 0.7 }, # Vertex 1 with 2 edges of weight 1
+        1 => { 0 => 0.3, 2 => 0.7 }, # Vertex 1 "    2 "
+        2 => { 0 => 0.5, 2 => 0.5 }, # Vertex 2 "    2 "
+        3 => { 0 => 0.2, 1 => 0.8 }, # Vertex 3 "    2 "
     },
     $attr
  );
@@ -80,6 +82,7 @@ sub new {
 
 =head2 populate()
 
+  $g->populate($matrix);
   $g->populate(\@vectors);
   $g->populate(\@vectors, $attribute);
   $g->populate(\%data_points, $attribute);
@@ -87,13 +90,10 @@ sub new {
 Populate a graph with weighted nodes.
 
 For arguments, the data can be a numeric value ("terminal node"), an arrayref
-of numeric vectors or a hashref of numeric edge values.  The C<attribute> is
-an optional string name, of default "weight."  The C<vertex_method> and
-C<edge_method> are optional code-references giving alternate weighting
-functions.
+of numeric vectors, a C<Math::MatrixReal> object, or a hashref of numeric edge
+values.  The C<attribute> is an optional string name, with the default "weight."
 
-Examples of C<data> in array reference form, using the default C<vertex> and
-C<edge> methods:
+Examples of C<data> in array reference form:
 
   []      No edges.
   [0]     1 vertex and 1 edge to node 0 having weight of 0.
@@ -101,13 +101,8 @@ C<edge> methods:
   [0,1]   2 vertices and 2 edges having edge weights 0,1 and vertex weight 1.
   [0,1,9] 3 vertices and 3 edges having edge weights 0,1,9 and vertex weight 10.
 
-An edge weight of zero can mean anything you wish.  If weights are seen as
-conversation among associates, "In the same room" might be a good analogy, a
-value of zero would mean "no conversation."
-
-The C<attribute> is named 'weight' by default, but can be anything you like.
-Multiple attributes may be applied to a graph, thereby layering increasing the
-overall dimension.
+Multiple attributes may be applied to a graph, thereby layering and increasing
+the overall dimension.
 
 =cut
 
@@ -206,7 +201,7 @@ sub _add_weighted_edges_from_hash {
 =head2 get_weight()
 
   $w = $g->get_weight($vertex);
-  $w = $g->get_weight(\@edge);
+  $w = $g->get_weight([$vertex, $neighbor]);
 
 Return the weight for the vertex or edge.
 
@@ -225,7 +220,7 @@ sub get_weight {
   $w = $g->get_attr($vertex, $attribute);
   $w = $g->get_attr(\@edge, $attribute);
 
-Return the named attribute value for the vertex or edge or zero.
+Return the named attribute value for the vertex or edge.
 
 =cut
 
@@ -249,7 +244,7 @@ __END__
 
 =head1 TO DO
 
-Find the heaviest and lightest nodes and edges?
+Find the heaviest and lightest nodes and edges.
 
 Find the total weight beneath and above a node.
 
