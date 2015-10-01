@@ -260,11 +260,12 @@ sub span {
 
     my ($smallest, $biggest);
     for my $vertex ( keys %$mass ) {
-        if ( !$smallest || $smallest > $mass->{$vertex} ) {
-            $smallest = $mass->{$vertex};
+        my $current = $mass->{$vertex};
+        if ( !defined $smallest || $smallest > $current ) {
+            $smallest = $current;
         }
-        if ( !$biggest || $biggest < $mass->{$vertex} ) {
-            $biggest = $mass->{$vertex};
+        if ( !defined $biggest || $biggest < $current ) {
+            $biggest = $current;
         }
     }
 
