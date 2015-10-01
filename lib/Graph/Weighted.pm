@@ -35,6 +35,8 @@ Readonly my $WEIGHT => 'weight';
     }
  }
 
+ my ($heaviest, $lightest) = $gw->span();
+
  my $gw = Graph::Weighted->new();
  my $attr = 'probability';
  $gw->populate(
@@ -65,7 +67,7 @@ as documented, but with the addition of custom weighting.
 
 =head2 new()
 
-  my $g = Graph::Weighted->new;
+  my $gw = Graph::Weighted->new;
 
 Return a new C<Graph::Weighted> object.
 
@@ -82,10 +84,10 @@ sub new {
 
 =head2 populate()
 
-  $g->populate($matrix);
-  $g->populate(\@vectors);
-  $g->populate(\@vectors, $attribute);
-  $g->populate(\%data_points, $attribute);
+  $gw->populate($matrix);
+  $gw->populate(\@vectors);
+  $gw->populate(\@vectors, $attribute);
+  $gw->populate(\%data_points, $attribute);
 
 Populate a graph with weighted nodes.
 
@@ -95,7 +97,7 @@ values.  The C<attribute> is an optional string name, with the default "weight."
 
 Examples of C<data> in array reference form:
 
-  []      No edges.
+  []      1 vertex with no edges.
   [0]     1 vertex and 1 edge to node 0 having weight of 0.
   [1]     1 vertex and 1 edge to node 0 weight 1.
   [0,1]   2 vertices and 2 edges having edge weights 0,1 and vertex weight 1.
@@ -200,8 +202,8 @@ sub _add_weighted_edges_from_hash {
 
 =head2 get_weight()
 
-  $w = $g->get_weight($vertex);
-  $w = $g->get_weight([$vertex, $neighbor]);
+  $w = $gw->get_weight($vertex);
+  $w = $gw->get_weight([$vertex, $neighbor]);
 
 Return the weight for the vertex or edge.
 
@@ -217,8 +219,8 @@ sub get_weight {
 
 =head2 get_attr()
 
-  $w = $g->get_attr($vertex, $attribute);
-  $w = $g->get_attr(\@edge, $attribute);
+  $w = $gw->get_attr($vertex, $attribute);
+  $w = $gw->get_attr(\@edge, $attribute);
 
 Return the named attribute value for the vertex or edge.
 
@@ -239,14 +241,48 @@ sub get_attr {
     return $self->get_vertex_attribute($v, $attr) || 0;
 }
 
+=head2 span()
+
+ my ($lightest, $heaviest) = $gw->span();
+ my ($lightest, $heaviest) = $gw->span($attr);
+
+Return the span of lightest to heaviest vertices.
+
+=cut
+
+sub span {
+    my ($self, $attr) = @_;
+
+    my $mass = {};
+    for my $vertex ( $self->vertices ) {
+        $mass->{$vertex} = $self->get_attr($vertex, $attr);
+    }
+
+    my ($smallest, $biggest);
+    for my $vertex ( keys %$mass ) {
+        if ( !$smallest || $smallest > $mass->{$vertex} ) {
+            $smallest = $mass->{$vertex};
+        }
+        if ( !$biggest || $biggest < $mass->{$vertex} ) {
+            $biggest = $mass->{$vertex};
+        }
+    }
+
+    my ($lightest, $heaviest) = ([], []);
+    for my $vertex ( keys %$mass ) {
+        push @$lightest, $vertex if $mass->{$vertex} == $smallest;
+        push @$heaviest, $vertex if $mass->{$vertex} == $biggest;
+    }
+
+    return $lightest, $heaviest;
+}
+
 1;
 __END__
 
 =head1 TO DO
 
-Find the heaviest and lightest nodes and edges.
-
-Find the total weight beneath and above a node.
+Find the total weight beneath a node.
 
 =head1 SEE ALSO
 
