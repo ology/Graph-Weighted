@@ -1,6 +1,9 @@
 Revision history for Graph-Weighted:
 
 {{$NEXT}}
+    - Implemented the span() method that returns the lightest and
+      heaviest vertices.
+    - Vastly simplified the population test.
 
 0.54  2015-09-30
     - Replaced constant with Readonly and base with parent.
