@@ -41,6 +41,13 @@ for my $data (@$weight_dataset) {
     $n++;
 }
 
+my $g = Graph::Weighted->new();
+isa_ok $g, 'Graph::Weighted';
+$g->populate($weight_dataset->[-1]);
+my ($x, $y) = $g->span();
+cmp_ok( $x->[0], '==', 4, 'span lightest' );
+cmp_ok( $y->[0], '==', 2, 'span heaviest' );
+
 done_testing();
 
 sub _weight_of {
