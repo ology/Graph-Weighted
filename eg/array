@@ -20,5 +20,3 @@ for my $vertex (sort { $a <=> $b } $gw->vertices) {
             $neighbor, $gw->get_weight([$vertex, $neighbor]);
     }
 }
-
-my $x = $gw->under(0);
