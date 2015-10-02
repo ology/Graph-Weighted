@@ -44,9 +44,13 @@ for my $data (@$weight_dataset) {
 my $g = Graph::Weighted->new();
 isa_ok $g, 'Graph::Weighted';
 $g->populate($weight_dataset->[-1]);
-my ($x, $y) = $g->span();
-cmp_ok( $x->[0], '==', 4, 'span lightest' );
-cmp_ok( $y->[0], '==', 2, 'span heaviest' );
+my ($x, $y) = $g->vertex_span();
+cmp_ok( $x->[0], '==', 4, 'vertex_span lightest' );
+cmp_ok( $y->[0], '==', 2, 'vertex_span heaviest' );
+
+($x, $y) = $g->edge_span();
+is_deeply( $x, [qw(0_1 1_0 3_2)], 'edge_span lightest' );
+is_deeply( $y, [qw(1_2 2_1)], 'edge_span heaviest' );
 
 my $weight = $g->path_attr( [ 0, 1 ] );
 cmp_ok( $weight, '==', 1, 'path_attr' );

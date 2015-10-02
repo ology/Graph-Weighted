@@ -35,7 +35,8 @@ Readonly my $WEIGHT => 'weight';
     }
  }
 
- my ($lightest, $heaviest) = $gw->span();
+ my ($lightest, $heaviest) = $gw->vertex_span();
+ my ($lightest, $heaviest) = $gw->edge_span();
  my $weight = $gw->path_attr(\@vertices);
 
  my $gw = Graph::Weighted->new();
@@ -242,16 +243,16 @@ sub get_attr {
     return $self->get_vertex_attribute($v, $attr) || 0;
 }
 
-=head2 span()
+=head2 vertex_span()
 
- my ($lightest, $heaviest) = $gw->span();
- my ($lightest, $heaviest) = $gw->span($attr);
+ my ($lightest, $heaviest) = $gw->vertex_span();
+ my ($lightest, $heaviest) = $gw->vertex_span($attr);
 
 Return the span of lightest to heaviest vertices.
 
 =cut
 
-sub span {
+sub vertex_span {
     my ($self, $attr) = @_;
 
     my $mass = {};
@@ -278,6 +279,47 @@ sub span {
 
     return $lightest, $heaviest;
 }
+
+=head2 edge_span()
+
+ my ($lightest, $heaviest) = $gw->edge_span();
+ my ($lightest, $heaviest) = $gw->edge_span($attr);
+
+Return the span of lightest to heaviest edges.
+
+=cut
+
+sub edge_span {
+    my ($self, $attr) = @_;
+
+    my $mass = {};
+    for my $edge ( $self->edges ) {
+        $mass->{ $edge->[0] . '_' . $edge->[1] } = $self->get_attr($edge, $attr);
+    }
+
+    my ($smallest, $biggest);
+    for my $edge ( keys %$mass ) {
+        my $current = $mass->{$edge};
+        if ( !defined $smallest || $smallest > $current ) {
+            $smallest = $current;
+        }
+        if ( !defined $biggest || $biggest < $current ) {
+            $biggest = $current;
+        }
+    }
+
+    my ($lightest, $heaviest) = ([], []);
+    for my $edge ( keys %$mass ) {
+        push @$lightest, $edge if $mass->{$edge} == $smallest;
+        push @$heaviest, $edge if $mass->{$edge} == $biggest;
+    }
+
+    $lightest = [ sort @$lightest ];
+    $heaviest = [ sort @$heaviest ];
+
+    return $lightest, $heaviest;
+}
+
 
 =head2 path_attr()
 

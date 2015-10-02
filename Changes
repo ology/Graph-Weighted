@@ -1,6 +1,10 @@
 Revision history for Graph-Weighted:
 
 {{$NEXT}}
+    - Renamed span() to vertex_span().
+    - Added the edge_span() method.
+
+0.5601 2015-10-02
     - Fixed SYNOPSIS typo.
 
 0.56  2015-10-02
