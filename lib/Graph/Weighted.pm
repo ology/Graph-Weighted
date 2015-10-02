@@ -2,7 +2,7 @@ package Graph::Weighted;
 
 # ABSTRACT: A weighted graph implementation
 
-our $VERSION = '0.56';
+our $VERSION = '0.5601';
 
 use warnings;
 use strict;
@@ -35,7 +35,7 @@ Readonly my $WEIGHT => 'weight';
     }
  }
 
- my ($heaviest, $lightest) = $gw->span();
+ my ($lightest, $heaviest) = $gw->span();
  my $weight = $gw->path_attr(\@vertices);
 
  my $gw = Graph::Weighted->new();

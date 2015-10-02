@@ -1,7 +1,7 @@
 Revision history for Graph-Weighted:
 
 {{$NEXT}}
-    -
+    - Fixed SYNOPSIS typo.
 
 0.56  2015-10-02
     - Added the path_attr() method.
