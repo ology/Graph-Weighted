@@ -49,8 +49,8 @@ cmp_ok( $x->[0], '==', 4, 'vertex_span lightest' );
 cmp_ok( $y->[0], '==', 2, 'vertex_span heaviest' );
 
 ($x, $y) = $g->edge_span();
-is_deeply( $x, [qw(0_1 1_0 3_2)], 'edge_span lightest' );
-is_deeply( $y, [qw(1_2 2_1)], 'edge_span heaviest' );
+is_deeply( $x, [ [0,1],[1,0],[3,2] ], 'edge_span lightest' );
+is_deeply( $y, [ [1,2],[2,1] ], 'edge_span heaviest' );
 
 my $weight = $g->path_attr( [ 0, 1 ] );
 cmp_ok( $weight, '==', 1, 'path_attr' );
