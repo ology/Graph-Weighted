@@ -36,6 +36,7 @@ Readonly my $WEIGHT => 'weight';
  }
 
  my ($heaviest, $lightest) = $gw->span();
+ my $weight = $gw->path_attr(\@vertices);
 
  my $gw = Graph::Weighted->new();
  my $attr = 'probability';
