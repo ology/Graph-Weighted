@@ -98,13 +98,14 @@ For arguments, the data can be a numeric value ("terminal node"), an arrayref
 of numeric vectors, a C<Math::MatrixReal> object, or a hashref of numeric edge
 values.  The C<attribute> is an optional string name, with the default "weight."
 
-Examples of C<data> in array reference form:
+Examples of vertices in array reference form:
 
   []      1 vertex with no edges.
-  [0]     1 vertex and 1 edge to node 0 having weight of 0.
-  [1]     1 vertex and 1 edge to node 0 weight 1.
-  [0,1]   2 vertices and 2 edges having edge weights 0,1 and vertex weight 1.
-  [0,1,9] 3 vertices and 3 edges having edge weights 0,1,9 and vertex weight 10.
+  [0]     1 vertex with no edges.
+  [1]     1 vertex and 1 edge to itself, weight 1.
+  [0,1]   1 vertex and 1 edge, weight 1.
+  [1,0,9] 2 vertices and 2 edges having, weight 10.
+  [1,2,3] 3 vertices and 3 edges having, weight 6.
 
 Multiple attributes may be applied to a graph, thereby layering and increasing
 the overall dimension.
