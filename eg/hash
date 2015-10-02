@@ -20,10 +20,10 @@ $gw->populate(
 # Show each vertex and its edges
 for my $vertex (sort { $a <=> $b } $gw->vertices) {
     warn sprintf "vertex: %s %s=%.2f\n",
-        $vertex, $attr, $gw->get_attr($vertex, $attr);
+        $vertex, $attr, $gw->get_cost($vertex, $attr);
 
     for my $neighbor (sort { $a <=> $b } $gw->neighbors($vertex)) {
         warn sprintf "\tedge to: %s %s=%.2f\n",
-            $neighbor, $attr, $gw->get_attr([$vertex, $neighbor], $attr);
+            $neighbor, $attr, $gw->get_cost([$vertex, $neighbor], $attr);
     }
 }
