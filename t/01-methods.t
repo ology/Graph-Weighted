@@ -54,6 +54,8 @@ $weight = $g->path_attr( [ 0, 1, 2 ] );
 cmp_ok( $weight, '==', 4, 'path_attr' );
 $weight = $g->path_attr( [ 0, 1, 2, 0 ] );
 cmp_ok( $weight, '==', 6, 'path_attr' );
+$weight = $g->path_attr( [ 0, 4 ] );
+is( $weight, undef, 'path_attr' );
 
 done_testing();
 
