@@ -52,14 +52,14 @@ cmp_ok( $y->[0], '==', 2, 'vertex_span heaviest' );
 is_deeply( $x, [ [0,1],[1,0],[3,2] ], 'edge_span lightest' );
 is_deeply( $y, [ [1,2],[2,1] ], 'edge_span heaviest' );
 
-my $weight = $g->path_attr( [ 0, 1 ] );
-cmp_ok( $weight, '==', 1, 'path_attr' );
-$weight = $g->path_attr( [ 0, 1, 2 ] );
-cmp_ok( $weight, '==', 4, 'path_attr' );
-$weight = $g->path_attr( [ 0, 1, 2, 0 ] );
-cmp_ok( $weight, '==', 6, 'path_attr' );
-$weight = $g->path_attr( [ 0, 4 ] );
-is( $weight, undef, 'path_attr' );
+my $weight = $g->path_cost( [ 0, 1 ] );
+cmp_ok( $weight, '==', 1, 'path_cost' );
+$weight = $g->path_cost( [ 0, 1, 2 ] );
+cmp_ok( $weight, '==', 4, 'path_cost' );
+$weight = $g->path_cost( [ 0, 1, 2, 0 ] );
+cmp_ok( $weight, '==', 6, 'path_cost' );
+$weight = $g->path_cost( [ 0, 4 ] );
+is( $weight, undef, 'path_cost' );
 
 done_testing();
 

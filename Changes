@@ -1,6 +1,10 @@
 Revision history for Graph-Weighted:
 
 {{$NEXT}}
+    - Renamed get_attr() to get_cost().
+    - Renamed path_attr() to path_cost().
+
+0.57  2015-10-02
     - Renamed span() to vertex_span().
     - Added the edge_span() method.
 

@@ -2,7 +2,7 @@ package Graph::Weighted;
 
 # ABSTRACT: A weighted graph implementation
 
-our $VERSION = '0.57';
+our $VERSION = '0.58';
 
 use warnings;
 use strict;
@@ -38,9 +38,9 @@ Readonly my $WEIGHT => 'weight';
  my ($lightest, $heaviest) = $gw->vertex_span();
  ($lightest, $heaviest) = $gw->edge_span();
 
- my $weight = $gw->path_attr(\@vertices);
+ my $weight = $gw->path_cost(\@vertices);
 
- my $attr = 'probability';
+ my $cost = 'probability';
  $gw = Graph::Weighted->new();
  $gw->populate(
     {
@@ -49,14 +49,14 @@ Readonly my $WEIGHT => 'weight';
         2 => { 0 => 0.5, 2 => 0.5 }, # Vertex 2 "    2 "
         3 => { 0 => 0.2, 1 => 0.8 }, # Vertex 3 "    2 "
     },
-    $attr
+    $cost
  );
  for my $vertex (sort { $a <=> $b } $gw->vertices) {
     warn sprintf "vertex: %s %s=%.2f\n",
-        $vertex, $attr, $gw->get_attr($vertex, $attr);
+        $vertex, $cost, $gw->get_cost($vertex, $cost);
     for my $neighbor (sort { $a <=> $b } $gw->neighbors($vertex)) {
         warn sprintf "\tedge to: %s %s=%.2f\n",
-            $neighbor, $attr, $gw->get_attr([$vertex, $neighbor], $attr);
+            $neighbor, $cost, $gw->get_cost([$vertex, $neighbor], $cost);
     }
  }
 
@@ -217,25 +217,25 @@ If no value is found, zero is returned.
 
 sub get_weight {
     my $self = shift;
-    return $self->get_attr(@_);
+    return $self->get_cost(@_);
 }
 
-=head2 get_attr()
+=head2 get_cost()
 
-  $w = $gw->get_attr($vertex, $attribute);
-  $w = $gw->get_attr(\@edge, $attribute);
+  $w = $gw->get_cost($vertex, $attribute);
+  $w = $gw->get_cost(\@edge, $attribute);
 
 Return the named attribute value for the vertex or edge.
 
 =cut
 
-sub get_attr {
+sub get_cost {
     my ($self, $v, $attr) = @_;
-    die 'ERROR: No vertex given to get_attr()' unless defined $v;
+    die 'ERROR: No vertex given to get_cost()' unless defined $v;
 
     # Default to weight.
     $attr ||= $WEIGHT;
-    warn "get_attr($v, $attr)\n" if $DEBUG;
+    warn "get_cost($v, $attr)\n" if $DEBUG;
 
     # Return the edge attribute if given a list.
     return $self->get_edge_attribute(@$v, $attr) || 0 if ref $v eq 'ARRAY';
@@ -249,7 +249,7 @@ sub get_attr {
  my ($lightest, $heaviest) = $gw->vertex_span();
  my ($lightest, $heaviest) = $gw->vertex_span($attr);
 
-Return the span of lightest to heaviest vertices.
+Return the lightest and heaviest vertices.
 
 =cut
 
@@ -258,7 +258,7 @@ sub vertex_span {
 
     my $mass = {};
     for my $vertex ( $self->vertices ) {
-        $mass->{$vertex} = $self->get_attr($vertex, $attr);
+        $mass->{$vertex} = $self->get_cost($vertex, $attr);
     }
 
     my ($smallest, $biggest);
@@ -286,7 +286,7 @@ sub vertex_span {
  my ($lightest, $heaviest) = $gw->edge_span();
  my ($lightest, $heaviest) = $gw->edge_span($attr);
 
-Return the span of lightest to heaviest edges.
+Return the lightest to heaviest edges.
 
 =cut
 
@@ -295,7 +295,7 @@ sub edge_span {
 
     my $mass = {};
     for my $edge ( $self->edges ) {
-        $mass->{ $edge->[0] . '_' . $edge->[1] } = $self->get_attr($edge, $attr);
+        $mass->{ $edge->[0] . '_' . $edge->[1] } = $self->get_cost($edge, $attr);
     }
 
     my ($smallest, $biggest);
@@ -329,18 +329,18 @@ Return the summed weight (or given attribute) of the path edges.
 
 =cut
 
-sub path_attr {
+sub path_cost {
     my ($self, $path, $attr) = @_;
 
     return unless $self->has_path( @$path );
 
-    my $path_attr = 0;
+    my $path_cost = 0;
 
     for my $i ( 0 .. @$path - 2 ) {
-        $path_attr += $self->get_attr( [ $path->[$i], $path->[ $i + 1 ] ] );
+        $path_cost += $self->get_cost( [ $path->[$i], $path->[ $i + 1 ] ] );
     }
 
-    return $path_attr;
+    return $path_cost;
 }
 
 1;
@@ -348,7 +348,7 @@ __END__
 
 =head1 TO DO
 
-Find the total weight beneath a node.
+Find the total cost beneath a node.
 
 =head1 SEE ALSO
 
