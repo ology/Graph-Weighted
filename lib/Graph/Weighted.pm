@@ -320,12 +320,12 @@ sub edge_span {
 }
 
 
-=head2 path_attr()
+=head2 path_cost()
 
- my $weight = $gw->path_attr(\@vertices);
- my $weight = $gw->path_attr(\@vertices, $attr);
+ my $weight = $gw->path_cost(\@vertices);
+ my $weight = $gw->path_cost(\@vertices, $attr);
 
-Return the summed weight (or given attribute) of the path edges.
+Return the summed weight (or given cost attribute) of the path edges.
 
 =cut
 
