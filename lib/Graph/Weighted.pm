@@ -36,10 +36,12 @@ Readonly my $WEIGHT => 'weight';
  }
 
  my ($lightest, $heaviest) = $gw->vertex_span();
- my ($lightest, $heaviest) = $gw->edge_span();
+
+ ($lightest, $heaviest) = $gw->edge_span();
+
  my $weight = $gw->path_attr(\@vertices);
 
- my $gw = Graph::Weighted->new();
+ $gw = Graph::Weighted->new();
  my $attr = 'probability';
  $gw->populate(
     {
