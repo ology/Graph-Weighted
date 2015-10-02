@@ -278,6 +278,29 @@ sub span {
     return $lightest, $heaviest;
 }
 
+=head2 path_attr()
+
+ my $weight = $gw->path_attr(\@vertices);
+ my $weight = $gw->path_attr(\@vertices, $attr);
+
+Return the summed weight (or given attribute) of the path edges.
+
+=cut
+
+sub path_attr {
+    my ($self, $path, $attr) = @_;
+
+    return unless $self->has_path( @$path );
+
+    my $path_attr = 0;
+
+    for my $i ( 0 .. @$path - 2 ) {
+        $path_attr += $self->get_attr( [ $path->[$i], $path->[ $i + 1 ] ] );
+    }
+
+    return $path_attr;
+}
+
 1;
 __END__
 

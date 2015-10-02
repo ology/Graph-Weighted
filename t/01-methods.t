@@ -48,6 +48,13 @@ my ($x, $y) = $g->span();
 cmp_ok( $x->[0], '==', 4, 'span lightest' );
 cmp_ok( $y->[0], '==', 2, 'span heaviest' );
 
+my $weight = $g->path_attr( [ 0, 1 ] );
+cmp_ok( $weight, '==', 1, 'path_attr' );
+$weight = $g->path_attr( [ 0, 1, 2 ] );
+cmp_ok( $weight, '==', 4, 'path_attr' );
+$weight = $g->path_attr( [ 0, 1, 2, 0 ] );
+cmp_ok( $weight, '==', 6, 'path_attr' );
+
 done_testing();
 
 sub _weight_of {

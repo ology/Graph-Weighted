@@ -1,6 +1,9 @@
 Revision history for Graph-Weighted:
 
 {{$NEXT}}
+    - Added the path_attr() method.
+
+0.55  2015-09-30
     - Implemented the span() method that returns the lightest and
       heaviest vertices.
     - Vastly simplified the population test.
