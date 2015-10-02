@@ -94,9 +94,9 @@ sub new {
 
 Populate a graph with weighted nodes.
 
-For arguments, the data can be a numeric value ("terminal node"), an arrayref
-of numeric vectors, a C<Math::MatrixReal> object, or a hashref of numeric edge
-values.  The C<attribute> is an optional string name, with the default "weight."
+For arguments, the data can be an arrayref of numeric vectors, a
+C<Math::MatrixReal> object, or a hashref of numeric edge values.  The
+C<attribute> is an optional string name, with the default "weight."
 
 Examples of vertices in array reference form:
 
