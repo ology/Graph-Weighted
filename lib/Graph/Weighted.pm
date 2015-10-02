@@ -36,13 +36,12 @@ Readonly my $WEIGHT => 'weight';
  }
 
  my ($lightest, $heaviest) = $gw->vertex_span();
-
  ($lightest, $heaviest) = $gw->edge_span();
 
  my $weight = $gw->path_attr(\@vertices);
 
- $gw = Graph::Weighted->new();
  my $attr = 'probability';
+ $gw = Graph::Weighted->new();
  $gw->populate(
     {
         0 => { 1 => 0.4, 3 => 0.6 }, # Vertex 0 with 2 edges of weight 1
@@ -311,13 +310,11 @@ sub edge_span {
     }
 
     my ($lightest, $heaviest) = ([], []);
-    for my $edge ( keys %$mass ) {
-        push @$lightest, $edge if $mass->{$edge} == $smallest;
-        push @$heaviest, $edge if $mass->{$edge} == $biggest;
+    for my $edge ( sort keys %$mass ) {
+        my $arrayref = [ split /_/, $edge ];
+        push @$lightest, $arrayref if $mass->{$edge} == $smallest;
+        push @$heaviest, $arrayref if $mass->{$edge} == $biggest;
     }
-
-    $lightest = [ sort @$lightest ];
-    $heaviest = [ sort @$heaviest ];
 
     return $lightest, $heaviest;
 }
