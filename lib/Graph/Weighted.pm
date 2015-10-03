@@ -2,7 +2,7 @@ package Graph::Weighted;
 
 # ABSTRACT: A weighted graph implementation
 
-our $VERSION = '0.59';
+our $VERSION = '0.5901';
 
 use warnings;
 use strict;
@@ -10,7 +10,6 @@ use strict;
 use parent qw(Graph);
 
 use Readonly;
-Readonly my $DEBUG  => 0;
 Readonly my $WEIGHT => 'weight';
 
 =head1 SYNOPSIS
@@ -117,7 +116,6 @@ the overall dimension.
 
 sub populate {
     my ($self, $data, $attr) = @_;
-    warn "populate(): $data\n" if $DEBUG;
 
     # Set the default attribute.
     $attr ||= $WEIGHT;
@@ -128,7 +126,6 @@ sub populate {
     if ($data_ref eq 'ARRAY' || $data_ref eq 'Math::Matrix') {
         my $vertex = 0; # Initial vertex id.
         for my $neighbors (@$data) {
-            warn "Neighbors of $vertex: [@$neighbors]\n" if $DEBUG;
             $self->_from_array(
                 $vertex, $neighbors, $attr
             );
@@ -141,7 +138,6 @@ sub populate {
                 my $label = delete $data->{$vertex}{label};
                 $self->set_vertex_attribute($vertex, 'label', $label);
             }
-            warn "Neighbors of $vertex: [", join(' ', values %{$data->{$vertex}}), "]\n" if $DEBUG && ref $vertex;
             $self->_from_hash(
                 $vertex, $data->{$vertex}, $attr
             );
@@ -154,7 +150,6 @@ sub populate {
 
 sub _from_array {
     my ($self, $vertex, $neighbors, $attr) = @_;
-    warn "add_weighted_edges(): $vertex, $neighbors, $attr\n" if $DEBUG;
 
     # Initial vertex weight
     my $vertex_weight = 0;
@@ -167,7 +162,6 @@ sub _from_array {
         # Add a node-node edge to the graph.
         $self->add_edge($vertex, $n);
 
-        warn "Edge: $vertex -($w)-> $n\n" if $DEBUG;
         $self->set_edge_attribute($vertex, $n, $attr, $w);
 
         # Tally the weight of the vertex.
@@ -175,13 +169,11 @@ sub _from_array {
     }
 
     # Set the weight of the graph node.
-    warn "Vertex $vertex $attr = $vertex_weight\n" if $DEBUG;
     $self->set_vertex_attribute($vertex, $attr, $vertex_weight);
 }
 
 sub _from_hash {
     my ($self, $vertex, $neighbors, $attr) = @_;
-    warn "add_weighted_edges(): $vertex, $neighbors, $attr\n" if $DEBUG;
 
     # Initial vertex weight
     my $vertex_weight = 0;
@@ -195,7 +187,6 @@ sub _from_hash {
             # Add a node-node edge to the graph.
             $self->add_edge($vertex, $n);
 
-            warn "Edge: $vertex -($w)-> $n\n" if $DEBUG;
             $self->set_edge_attribute($vertex, $n, $attr, $w);
 
             # Tally the weight of the vertex.
@@ -207,7 +198,6 @@ sub _from_hash {
     }
 
     # Set the weight of the graph node.
-    warn "Vertex $vertex $attr = $vertex_weight\n" if $DEBUG;
     $self->set_vertex_attribute($vertex, $attr, $vertex_weight);
 }
 
@@ -240,7 +230,6 @@ sub get_cost {
 
     # Default to weight.
     $attr ||= $WEIGHT;
-    warn "get_cost($v, $attr)\n" if $DEBUG;
 
     # Return the edge attribute if given a list.
     return $self->get_edge_attribute(@$v, $attr) || 0 if ref $v eq 'ARRAY';
