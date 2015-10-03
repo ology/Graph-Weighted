@@ -2,7 +2,7 @@ package Graph::Weighted;
 
 # ABSTRACT: A weighted graph implementation
 
-our $VERSION = '0.5801';
+our $VERSION = '0.5802';
 
 use warnings;
 use strict;
@@ -74,7 +74,7 @@ as documented, but with the addition of custom weighting.
 
 Return a new C<Graph::Weighted> object.
 
-Please see L<Graph> for the possible constructor arguments.
+Please see L<Graph/Constructors> for the possible constructor arguments.
 
 =cut
 
@@ -105,8 +105,8 @@ Examples of vertices in array reference form:
   []      1 vertex with no edges.
   [0]     1 vertex with no edges.
   [1]     1 vertex and 1 edge to itself, weight 1.
-  [0,1]   1 vertex and 1 edge, weight 1.
-  [1,0,9] 2 vertices and 2 edges having, weight 10.
+  [0,1]   2 vertices and 1 edge, weight 1.
+  [1,0,9] 3 vertices and 2 edges having, weight 10.
   [1,2,3] 3 vertices and 3 edges having, weight 6.
 
 Multiple attributes may be applied to a graph, thereby layering and increasing
@@ -128,7 +128,7 @@ sub populate {
         my $vertex = 0; # Initial vertex id.
         for my $neighbors (@$data) {
             warn "Neighbors of $vertex: [@$neighbors]\n" if $DEBUG;
-            $self->_add_weighted_edges_from_array(
+            $self->_from_array(
                 $vertex, $neighbors, $attr
             );
             $vertex++; # Move on to the next vertex...
@@ -137,7 +137,7 @@ sub populate {
     elsif ($data_ref eq 'HASH') {
         for my $vertex (keys %$data) {
             warn "Neighbors of $vertex: [", join(' ', values %{$data->{$vertex}}), "]\n" if $DEBUG && ref $vertex;
-            $self->_add_weighted_edges_from_hash(
+            $self->_from_hash(
                 $vertex, $data->{$vertex}, $attr
             );
         }
@@ -147,7 +147,7 @@ sub populate {
     }
 }
 
-sub _add_weighted_edges_from_array {
+sub _from_array {
     my ($self, $vertex, $neighbors, $attr) = @_;
     warn "add_weighted_edges(): $vertex, $neighbors, $attr\n" if $DEBUG;
 
@@ -174,7 +174,7 @@ sub _add_weighted_edges_from_array {
     $self->set_vertex_attribute($vertex, $attr, $vertex_weight);
 }
 
-sub _add_weighted_edges_from_hash {
+sub _from_hash {
     my ($self, $vertex, $neighbors, $attr) = @_;
     warn "add_weighted_edges(): $vertex, $neighbors, $attr\n" if $DEBUG;
 
