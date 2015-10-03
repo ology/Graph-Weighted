@@ -1,6 +1,9 @@
 Revision history for Graph-Weighted:
 
 {{$NEXT}}
+    - Remove the old-school "debug mode."
+
+0.59  2015-10-03
     - Added the ability to label nodes.
     - Skip the dist.ini and github readme files.
 
