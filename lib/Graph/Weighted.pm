@@ -2,7 +2,7 @@ package Graph::Weighted;
 
 # ABSTRACT: A weighted graph implementation
 
-our $VERSION = '0.5802';
+our $VERSION = '0.59';
 
 use warnings;
 use strict;
@@ -40,23 +40,24 @@ Readonly my $WEIGHT => 'weight';
 
  my $weight = $gw->path_cost(\@vertices);
 
- my $cost = 'probability';
+ my $attr = 'probability';
  $gw = Graph::Weighted->new();
  $gw->populate(
     {
-        0 => { 1 => 0.4, 3 => 0.6 }, # Vertex 0 with 2 edges of weight 1
-        1 => { 0 => 0.3, 2 => 0.7 }, # Vertex 1 "    2 "
-        2 => { 0 => 0.5, 2 => 0.5 }, # Vertex 2 "    2 "
-        3 => { 0 => 0.2, 1 => 0.8 }, # Vertex 3 "    2 "
+        0 => { label => 'A', 1 => 0.4, 3 => 0.6 }, # Vertex A with 2 edges, weight 1
+        1 => { label => 'B', 0 => 0.3, 2 => 0.7 }, # Vertex B "    2 "
+        2 => { label => 'C', 0 => 0.5, 2 => 0.5 }, # Vertex C "    2 "
+        3 => { label => 'D', 0 => 0.2, 1 => 0.8 }, # Vertex D "    2 "
     },
-    $cost
+    $attr
  );
  for my $vertex (sort { $a <=> $b } $gw->vertices) {
-    warn sprintf "vertex: %s %s=%.2f\n",
-        $vertex, $cost, $gw->get_cost($vertex, $cost);
+    warn sprintf "%s vertex: %s %s=%.2f\n",
+        $gw->get_vertex_attribute($vertex, 'label'),
+        $vertex, $attr, $gw->get_cost($vertex, $attr);
     for my $neighbor (sort { $a <=> $b } $gw->neighbors($vertex)) {
         warn sprintf "\tedge to: %s %s=%.2f\n",
-            $neighbor, $cost, $gw->get_cost([$vertex, $neighbor], $cost);
+            $neighbor, $attr, $gw->get_cost([$vertex, $neighbor], $attr);
     }
  }
 
@@ -136,6 +137,10 @@ sub populate {
     }
     elsif ($data_ref eq 'HASH') {
         for my $vertex (keys %$data) {
+            if ( $data->{label} ) {
+                my $label = delete $data->{label};
+                $self->set_vertex_attribute($vertex, 'label', $label);
+            }
             warn "Neighbors of $vertex: [", join(' ', values %{$data->{$vertex}}), "]\n" if $DEBUG && ref $vertex;
             $self->_from_hash(
                 $vertex, $data->{$vertex}, $attr
