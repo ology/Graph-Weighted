@@ -2,6 +2,7 @@ Revision history for Graph-Weighted:
 
 {{$NEXT}}
     - Added the ability to label nodes.
+    - Skip the dist.ini and github readme files.
 
 0.5802 2015-10-02
     - Corrected documentation!
