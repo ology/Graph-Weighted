@@ -137,8 +137,8 @@ sub populate {
     }
     elsif ($data_ref eq 'HASH') {
         for my $vertex (keys %$data) {
-            if ( $data->{label} ) {
-                my $label = delete $data->{label};
+            if ( $data->{$vertex}{label} ) {
+                my $label = delete $data->{$vertex}{label};
                 $self->set_vertex_attribute($vertex, 'label', $label);
             }
             warn "Neighbors of $vertex: [", join(' ', values %{$data->{$vertex}}), "]\n" if $DEBUG && ref $vertex;
