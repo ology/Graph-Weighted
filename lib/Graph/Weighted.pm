@@ -2,7 +2,7 @@ package Graph::Weighted;
 
 # ABSTRACT: A weighted graph implementation
 
-our $VERSION = '0.58';
+our $VERSION = '0.5801';
 
 use warnings;
 use strict;
@@ -88,8 +88,10 @@ sub new {
 =head2 populate()
 
   $gw->populate($matrix);
+  $gw->populate($matrix, $attribute);
   $gw->populate(\@vectors);
   $gw->populate(\@vectors, $attribute);
+  $gw->populate(\%data_points);
   $gw->populate(\%data_points, $attribute);
 
 Populate a graph with weighted nodes.
