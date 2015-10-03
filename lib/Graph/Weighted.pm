@@ -218,9 +218,6 @@ sub _from_hash {
 
 Return the weight for the vertex or edge.
 
-A vertex is a numeric value.  An edge is an array reference with 2 elements.
-If no value is found, zero is returned.
-
 =cut
 
 sub get_weight {
