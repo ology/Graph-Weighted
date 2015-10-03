@@ -3,6 +3,9 @@ Revision history for Graph-Weighted:
 {{$NEXT}}
     - 
 
+0.5801 2015-10-02
+    - Improved documentation.
+
 0.58  2015-10-02
     - Renamed get_attr() to get_cost().
     - Renamed path_attr() to path_cost().
