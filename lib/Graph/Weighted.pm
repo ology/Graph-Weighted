@@ -9,6 +9,7 @@ use strict;
 
 use parent qw(Graph);
 
+use Carp qw( croak );
 use Readonly;
 Readonly my $WEIGHT => 'weight';
 
@@ -144,7 +145,7 @@ sub populate {
         }
     }
     else {
-        warn "Unknown data type: $data\n";
+        croak "Unknown data type: $data\n";
     }
 }
 
@@ -228,7 +229,7 @@ Return the named attribute value for the vertex or edge.
 
 sub get_cost {
     my ($self, $v, $attr) = @_;
-    die 'ERROR: No vertex given to get_cost()' unless defined $v;
+    croak 'ERROR: No vertex given to get_cost()' unless defined $v;
 
     # Default to weight.
     $attr ||= $WEIGHT;
