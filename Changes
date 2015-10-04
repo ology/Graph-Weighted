@@ -1,6 +1,9 @@
 Revision history for Graph-Weighted:
 
 {{$NEXT}}
+    - Remove the unneeded new() method.
+
+0.5902 2015-10-03
     - Improved documentation.
     - Used Carp::croak instead of warn/die.
 
