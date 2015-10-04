@@ -1,6 +1,8 @@
 Revision history for Graph-Weighted:
 
 {{$NEXT}}
+    - Improved documentation.
+    - Used Carp::croak instead of warn/die.
 
 0.5901 2015-10-03
     - Remove the old-school "debug mode."
