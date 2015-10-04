@@ -331,7 +331,7 @@ sub path_cost {
     my $path_cost = 0;
 
     for my $i ( 0 .. @$path - 2 ) {
-        $path_cost += $self->get_cost( [ $path->[$i], $path->[ $i + 1 ] ] );
+        $path_cost += $self->get_cost( [ $path->[$i], $path->[ $i + 1 ] ], $attr );
     }
 
     return $path_cost;
