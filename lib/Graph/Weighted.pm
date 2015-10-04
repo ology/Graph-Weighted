@@ -2,7 +2,7 @@ package Graph::Weighted;
 
 # ABSTRACT: A weighted graph implementation
 
-our $VERSION = '0.5902';
+our $VERSION = '0.5903';
 
 use warnings;
 use strict;
@@ -76,15 +76,6 @@ as documented, but with the addition of custom weighting.
 Return a new C<Graph::Weighted> object.
 
 Please see L<Graph/Constructors> for the possible constructor arguments.
-
-=cut
-
-sub new {
-    my $class = shift;
-    my $self = $class->SUPER::new();
-    bless $self, $class;
-    return $self;
-}
 
 =head2 populate()
 
