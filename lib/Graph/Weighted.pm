@@ -217,7 +217,9 @@ sub get_weight {
 
 =head2 get_cost()
 
+  $w = $gw->get_cost($vertex);
   $w = $gw->get_cost($vertex, $attribute);
+  $w = $gw->get_cost(\@edge);
   $w = $gw->get_cost(\@edge, $attribute);
 
 Return the named attribute value for the vertex or edge.
