@@ -88,9 +88,16 @@ Please see L<Graph/Constructors> for the possible constructor arguments.
 
 Populate a graph with weighted nodes.
 
-For arguments, the data can be an arrayref of numeric vectors, a
-C<Math::MatrixReal> object, or a hashref of numeric edge values.  The
-C<attribute> is an optional string name, with the default "weight."
+The data can be an arrayref of numeric vectors, a C<Math::MatrixReal> object, or
+a hashref of numeric edge values.
+
+Data given as a hash reference may also contain an optional node label, as shown
+in the SYNOPSIS.
+
+The optional edge C<attribute> argument is a string with the default "weight."
+
+Multiple attributes may be applied to a graph, thereby layering and increasing
+the overall dimension.
 
 Examples of vertices in array reference form:
 
@@ -100,9 +107,6 @@ Examples of vertices in array reference form:
   [0,1]   2 vertices and 1 edge, weight 1.
   [1,0,9] 3 vertices and 2 edges having, weight 10.
   [1,2,3] 3 vertices and 3 edges having, weight 6.
-
-Multiple attributes may be applied to a graph, thereby layering and increasing
-the overall dimension.
 
 =cut
 
