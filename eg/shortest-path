@@ -1,0 +1,21 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+
+use Graph::Weighted;
+
+my $g = Graph::Weighted->new();
+$g->populate(
+    {
+        A => { B => 4, C => 2 },
+        B => { C => 5, D => 10 },
+        C => { E => 3 },
+        D => { F => 11 },
+        E => { D => 4 },
+        F => { },
+    },
+);
+
+my @path = $g->SP_Dijkstra( 'A', 'F' );
+print join( '->', @path ), "\n";
