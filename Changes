@@ -1,6 +1,9 @@
 Revision history for Graph-Weighted:
 
 {{$NEXT}}
+    - Illustrate SP_Dijkstra in eg/.
+
+0.5903 2015-10-03
     - Remove the unneeded new() method.
 
 0.5902 2015-10-03
