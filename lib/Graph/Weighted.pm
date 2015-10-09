@@ -382,7 +382,9 @@ __END__
 
 =head1 SEE ALSO
 
-L<Graph>
+L<Graph>, the parent of this module
+
+L<Graph::Easy::Weighted>, the sibling
 
 The F<eg/*> and F<t/*> file sources.
 
