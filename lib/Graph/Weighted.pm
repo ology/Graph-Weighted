@@ -380,10 +380,6 @@ __END__
   @path = $apsp->path_vertices( 1, 3 ); # 1->4->2->3
   print 'Floyd-Warshall: ', join( '->', @path ), "\n";
 
-=head1 TO DO
-
-Find the total cost beneath a node.
-
 =head1 SEE ALSO
 
 L<Graph>
