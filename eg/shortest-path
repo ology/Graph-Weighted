@@ -18,6 +18,18 @@ $g->populate(
         F => { },
     },
 );
+my @path = $g->SP_Dijkstra( 'A', 'F' ); # A->C->E->D->F
+print 'Dijkstra: ', join( '->', @path ), "\n";
 
-my @path = $g->SP_Dijkstra( 'A', 'F' );
-print join( '->', @path ), "\n";
+$g = Graph::Weighted->new();
+$g->populate(
+    {
+        S => { A =>  7, B => 6 },
+        A => { C => -3, T => 9 },
+        B => { A =>  8, C => 5, T => -4 },
+        C => { B => -5 },
+        T => { },
+    },
+);
+@path = $g->SP_Bellman_Ford( 'S', 'T' ); # S->A->C->B->T
+print 'Bellman-Ford: ', join( '->', @path ), "\n";
