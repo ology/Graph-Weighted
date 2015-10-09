@@ -1,8 +1,11 @@
 Revision history for Graph-Weighted:
 
 {{$NEXT}}
+    - Add a handy Shortest Paths example section to the POD.
+
+0.5904 2015-10-05
     - Illustrate SP_Dijkstra in eg/.
-    - Improved documentation.
+    - Improve documentation.
 
 0.5903 2015-10-03
     - Remove the unneeded new() method.
