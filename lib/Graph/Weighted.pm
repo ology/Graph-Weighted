@@ -2,7 +2,7 @@ package Graph::Weighted;
 
 # ABSTRACT: A weighted graph implementation
 
-our $VERSION = '0.5904';
+our $VERSION = '0.5905';
 
 use warnings;
 use strict;
@@ -337,6 +337,48 @@ sub path_cost {
 
 1;
 __END__
+
+=head1 SHORTEST PATHS
+
+  my $g = Graph::Weighted->new();
+  $g->populate(
+    {
+        A => { B => 4, C => 2 },
+        B => { C => 5, D => 10 },
+        C => { E => 3 },
+        D => { F => 11 },
+        E => { D => 4 },
+        F => { },
+    },
+  );
+  my @path = $g->SP_Dijkstra( 'A', 'F' ); # A->C->E->D->F
+  print 'Dijkstra: ', join( '->', @path ), "\n";
+
+  $g = Graph::Weighted->new();
+  $g->populate(
+    {
+        S => { A =>  7, B => 6 },
+        A => { C => -3, T => 9 },
+        B => { A =>  8, C => 5, T => -4 },
+        C => { B => -5 },
+        T => { },
+    },
+  );
+  @path = $g->SP_Bellman_Ford( 'S', 'T' ); # S->A->C->B->T
+  print 'Bellman-Ford: ', join( '->', @path ), "\n";
+
+  $g = Graph::Weighted->new();
+  $g->populate(
+    {
+        1 => { 2 => 8, 4 => 1 },
+        2 => { 3 => 1 },
+        3 => { 1 => 4 },
+        4 => { 2 => 2, 3 => 9 },
+    },
+  );
+  my $apsp = $g->APSP_Floyd_Warshall();
+  @path = $apsp->path_vertices( 1, 3 ); # 1->4->2->3
+  print 'Floyd-Warshall: ', join( '->', @path ), "\n";
 
 =head1 TO DO
 
