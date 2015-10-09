@@ -1,6 +1,7 @@
 Revision history for Graph-Weighted:
 
 {{$NEXT}}
+    - Improved documentation ever so slightly.
 
 0.5905 2015-10-09
     - Add a handy Shortest Paths example section to the POD.
