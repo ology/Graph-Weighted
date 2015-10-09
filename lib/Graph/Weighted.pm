@@ -2,7 +2,7 @@ package Graph::Weighted;
 
 # ABSTRACT: A weighted graph implementation
 
-our $VERSION = '0.5905';
+our $VERSION = '0.5906';
 
 use warnings;
 use strict;
@@ -63,9 +63,9 @@ Readonly my $WEIGHT => 'weight';
 
 =head1 DESCRIPTION
 
-A C<Graph::Weighted> object is a subclass of the L<Graph> module with 
-attribute handling.  As such, all of the L<Graph> methods may be used
-as documented (e.g. L</"SHORTEST PATHS">), but with the addition of custom weighting.
+A C<Graph::Weighted> object is a subclass of the L<Graph> module with attribute
+handling.  As such, all of the L<Graph> methods may be used as documented (e.g.
+L</"SHORTEST PATHS">), but with the addition of custom weighting.
 
 =head1 METHODS
 
