@@ -213,10 +213,10 @@ sub get_weight {
 
 =head2 get_cost()
 
-  $w = $gw->get_cost($vertex);
-  $w = $gw->get_cost($vertex, $attribute);
-  $w = $gw->get_cost(\@edge);
-  $w = $gw->get_cost(\@edge, $attribute);
+  $c = $gw->get_cost($vertex);
+  $c = $gw->get_cost($vertex, $attribute);
+  $c = $gw->get_cost(\@edge);
+  $c = $gw->get_cost(\@edge, $attribute);
 
 Return the named attribute value for the vertex or edge.
 
@@ -238,8 +238,8 @@ sub get_cost {
 
 =head2 vertex_span()
 
- my ($lightest, $heaviest) = $gw->vertex_span();
- my ($lightest, $heaviest) = $gw->vertex_span($attr);
+ ($lightest, $heaviest) = $gw->vertex_span();
+ ($lightest, $heaviest) = $gw->vertex_span($attr);
 
 Return the lightest and heaviest vertices.
 
@@ -275,8 +275,8 @@ sub vertex_span {
 
 =head2 edge_span()
 
- my ($lightest, $heaviest) = $gw->edge_span();
- my ($lightest, $heaviest) = $gw->edge_span($attr);
+ ($lightest, $heaviest) = $gw->edge_span();
+ ($lightest, $heaviest) = $gw->edge_span($attr);
 
 Return the lightest to heaviest edges.
 
@@ -314,8 +314,8 @@ sub edge_span {
 
 =head2 path_cost()
 
- my $weight = $gw->path_cost(\@vertices);
- my $weight = $gw->path_cost(\@vertices, $attr);
+ $c = $gw->path_cost(\@vertices);
+ $c = $gw->path_cost(\@vertices, $attr);
 
 Return the summed weight (or given cost attribute) of the path edges.
 
