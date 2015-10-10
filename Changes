@@ -1,6 +1,8 @@
 Revision history for Graph-Weighted:
 
 {{$NEXT}}
+
+0.5907 2015-10-09
     - Improved documentation.
     - Updated code in the eg/ examples directory with MST.
 
