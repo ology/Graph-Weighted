@@ -319,6 +319,9 @@ sub edge_span {
 
 Return the summed weight (or given cost attribute) of the path edges.
 
+For the cost of the shortest path, please see C<path_length> under
+L<Graph/"All-Pairs Shortest Paths (APSP)">.
+
 =cut
 
 sub path_cost {
@@ -386,6 +389,6 @@ L<Graph>, the parent of this module
 
 L<Graph::Easy::Weighted>, the sibling
 
-The F<eg/*> and F<t/*> file sources.
+The F<eg/*> and F<t/*> file sources
 
 =cut
