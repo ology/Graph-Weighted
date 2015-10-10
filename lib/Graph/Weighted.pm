@@ -2,7 +2,7 @@ package Graph::Weighted;
 
 # ABSTRACT: A weighted graph implementation
 
-our $VERSION = '0.5906';
+our $VERSION = '0.5907';
 
 use warnings;
 use strict;
@@ -19,11 +19,11 @@ Readonly my $WEIGHT => 'weight';
 
  my $gw = Graph::Weighted->new();
  $gw->populate(
-    [ [ 0, 1, 2, 0, 0 ], # Vertex 0 with 2 edges of weight 3
-      [ 1, 0, 3, 0, 0 ], #    "   1      2 "               4
-      [ 2, 3, 0, 0, 0 ], #    "   2      2 "               5
-      [ 0, 0, 1, 0, 0 ], #    "   3      1 "               1
-      [ 0, 0, 0, 0, 0 ], #    "   4      0 "               0
+    [ [ 0,1,2,0,0 ], # Vertex 0 with 2 edges of weight 3
+      [ 1,0,3,0,0 ], #    "   1      2 "               4
+      [ 2,3,0,0,0 ], #    "   2      2 "               5
+      [ 0,0,1,0,0 ], #    "   3      1 "               1
+      [ 0,0,0,0,0 ], #    "   4      0 "               0
     ]
  );
  for my $vertex (sort { $a <=> $b } $gw->vertices) {
@@ -44,10 +44,10 @@ Readonly my $WEIGHT => 'weight';
  $gw = Graph::Weighted->new();
  $gw->populate(
     {
-        0 => { label => 'A', 1 => 0.4, 3 => 0.6 }, # Vertex A with 2 edges, weight 1
-        1 => { label => 'B', 0 => 0.3, 2 => 0.7 }, # Vertex B "    2 "
-        2 => { label => 'C', 0 => 0.5, 2 => 0.5 }, # Vertex C "    2 "
-        3 => { label => 'D', 0 => 0.2, 1 => 0.8 }, # Vertex D "    2 "
+        0 => { label => 'A', 1=>0.4, 3=>0.6 }, # Vertex A with 2 edges, weight 1
+        1 => { label => 'B', 0=>0.3, 2=>0.7 }, # Vertex B "    2 "
+        2 => { label => 'C', 0=>0.5, 2=>0.5 }, # Vertex C "    2 "
+        3 => { label => 'D', 0=>0.2, 1=>0.8 }, # Vertex D "    2 "
     },
     $attr
  );
@@ -341,47 +341,59 @@ sub path_cost {
 1;
 __END__
 
-=head1 SHORTEST PATHS
+=head1 EXAMPLES
+
+=head2 Shortest Paths
 
   my $g = Graph::Weighted->new();
-  $g->populate(
-    {
-        A => { B => 4, C => 2 },
-        B => { C => 5, D => 10 },
-        C => { E => 3 },
-        D => { F => 11 },
-        E => { D => 4 },
-        F => { },
-    },
-  );
+  $g->populate({
+    A => { B => 4, C => 2 },
+    B => { C => 5, D => 10 },
+    C => { E => 3 },
+    D => { F => 11 },
+    E => { D => 4 },
+    F => { },
+  });
   my @path = $g->SP_Dijkstra( 'A', 'F' ); # A->C->E->D->F
   print 'Dijkstra: ', join( '->', @path ), "\n";
 
   $g = Graph::Weighted->new();
-  $g->populate(
-    {
-        S => { A =>  7, B => 6 },
-        A => { C => -3, T => 9 },
-        B => { A =>  8, C => 5, T => -4 },
-        C => { B => -5 },
-        T => { },
-    },
-  );
+  $g->populate({
+    S => { A =>  7, B => 6 },
+    A => { C => -3, T => 9 },
+    B => { A =>  8, C => 5, T => -4 },
+    C => { B => -5 },
+    T => { },
+  });
   @path = $g->SP_Bellman_Ford( 'S', 'T' ); # S->A->C->B->T
   print 'Bellman-Ford: ', join( '->', @path ), "\n";
 
   $g = Graph::Weighted->new();
-  $g->populate(
-    {
-        1 => { 2 => 8, 4 => 1 },
-        2 => { 3 => 1 },
-        3 => { 1 => 4 },
-        4 => { 2 => 2, 3 => 9 },
-    },
-  );
+  $g->populate({
+    1 => { 2 => 8, 4 => 1 },
+    2 => { 3 => 1 },
+    3 => { 1 => 4 },
+    4 => { 2 => 2, 3 => 9 },
+  });
   my $apsp = $g->APSP_Floyd_Warshall();
   @path = $apsp->path_vertices( 1, 3 ); # 1->4->2->3
   print 'Floyd-Warshall: ', join( '->', @path ), "\n";
+
+=head2 Minimum Spanning Trees
+
+  my $g = Graph::Weighted->new( undirected => 1 );
+  $g->populate({
+        A => { B => 4, F => 2 },
+        B => { C => 6, F => 5 },
+        C => { F => 1 },
+        D => { },
+  });
+
+  my @path = $g->MST_Kruskal; # A=B,A=F,C=F
+  print 'Kruskal: ', join( '->', @path ), "\n";
+
+  @path = $g->MST_Prim; # same
+  print 'Prim: ', join( '->', @path ), "\n";
 
 =head1 SEE ALSO
 
