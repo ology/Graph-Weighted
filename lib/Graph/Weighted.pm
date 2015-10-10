@@ -28,10 +28,10 @@ Readonly my $WEIGHT => 'weight';
  );
  for my $vertex (sort { $a <=> $b } $gw->vertices) {
     warn sprintf "vertex: %s weight=%.2f\n",
-        $vertex, $gw->get_weight($vertex);
+        $vertex, $gw->get_cost($vertex);
     for my $neighbor (sort { $a <=> $b } $gw->neighbors($vertex)) {
         warn sprintf "\tedge to: %s weight=%.2f\n",
-            $neighbor, $gw->get_weight([$vertex, $neighbor]);
+            $neighbor, $gw->get_cost([$vertex, $neighbor]);
     }
  }
 
