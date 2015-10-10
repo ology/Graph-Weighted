@@ -64,8 +64,8 @@ Readonly my $WEIGHT => 'weight';
 =head1 DESCRIPTION
 
 A C<Graph::Weighted> object is a subclass of the L<Graph> module with attribute
-handling.  As such, all of the L<Graph> methods may be used as documented (e.g.
-L</"SHORTEST PATHS">), but with the addition of custom weighting.
+handling.  As such, all of the L<Graph> methods may be used, with the addition
+of custom weighting.
 
 =head1 METHODS
 
