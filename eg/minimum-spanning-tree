@@ -14,8 +14,9 @@ $g->populate(
         D => { },
     },
 );
+
 my @path = $g->MST_Kruskal; # A=B,A=F,C=F
 print 'Kruskal: ', join( '->', @path ), "\n";
 
-@path = $g->MST_Prim; # A=B,A=F,C=F
+@path = $g->MST_Prim; # same
 print 'Prim: ', join( '->', @path ), "\n";
