@@ -1,6 +1,7 @@
 Revision history for Graph-Weighted:
 
 {{$NEXT}}
+    - Add support for population with Math::MatrixReal objects.
 
 0.5907 2015-10-09
     - Improved documentation.
@@ -62,7 +63,7 @@ Revision history for Graph-Weighted:
     - Improved documentation.
     - Removed the confusing and unnecessary vertex_method and
       edge_method logic.
-    - Allow population with Math::MatrixReal objects.
+    - Allow population with Math::Matrix objects.
 
 0.5303 2014-08-30
     - Improved documentation!
