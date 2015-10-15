@@ -122,10 +122,15 @@ sub populate {
     if ($data_ref eq 'ARRAY' || $data_ref eq 'Math::Matrix') {
         my $vertex = 0; # Initial vertex id.
         for my $neighbors (@$data) {
-            $self->_from_array(
-                $vertex, $neighbors, $attr
-            );
+            $self->_from_array($vertex, $neighbors, $attr);
             $vertex++; # Move on to the next vertex...
+        }
+    }
+    elsif ($data_ref eq 'Math::MatrixReal') {
+        my $vertex = 0;
+        for my $neighbors (@{ $data->[0] }) {
+            $self->_from_array($vertex, $neighbors, $attr);
+            $vertex++;
         }
     }
     elsif ($data_ref eq 'HASH') {
