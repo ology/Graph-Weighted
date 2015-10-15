@@ -88,8 +88,8 @@ Please see L<Graph/Constructors> for the possible constructor arguments.
 
 Populate a graph with weighted nodes.
 
-The data can be an arrayref of numeric vectors, a C<Math::Matrix> object, or a
-hashref of numeric edge values.
+The data can be an arrayref of numeric vectors, a C<Math::Matrix> object, a
+C<Math::MatrixReal> object, or a hashref of numeric edge values.
 
 Data given as a hash reference may also contain an optional node label, as shown
 in the SYNOPSIS.
