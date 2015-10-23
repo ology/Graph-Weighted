@@ -2,7 +2,7 @@ package Graph::Weighted;
 
 # ABSTRACT: A weighted graph implementation
 
-our $VERSION = '0.5903';
+our $VERSION = '0.60';
 
 use warnings;
 use strict;
@@ -19,19 +19,19 @@ Readonly my $WEIGHT => 'weight';
 
  my $gw = Graph::Weighted->new();
  $gw->populate(
-    [ [ 0, 1, 2, 0, 0 ], # Vertex 0 with 2 edges of weight 3
-      [ 1, 0, 3, 0, 0 ], #    "   1      2 "               4
-      [ 2, 3, 0, 0, 0 ], #    "   2      2 "               5
-      [ 0, 0, 1, 0, 0 ], #    "   3      1 "               1
-      [ 0, 0, 0, 0, 0 ], #    "   4      0 "               0
+    [ [ 0,1,2,0,0 ], # Vertex 0 with 2 edges of weight 3
+      [ 1,0,3,0,0 ], #    "   1      2 "               4
+      [ 2,3,0,0,0 ], #    "   2      2 "               5
+      [ 0,0,1,0,0 ], #    "   3      1 "               1
+      [ 0,0,0,0,0 ], #    "   4      0 "               0
     ]
  );
  for my $vertex (sort { $a <=> $b } $gw->vertices) {
     warn sprintf "vertex: %s weight=%.2f\n",
-        $vertex, $gw->get_weight($vertex);
+        $vertex, $gw->get_cost($vertex);
     for my $neighbor (sort { $a <=> $b } $gw->neighbors($vertex)) {
         warn sprintf "\tedge to: %s weight=%.2f\n",
-            $neighbor, $gw->get_weight([$vertex, $neighbor]);
+            $neighbor, $gw->get_cost([$vertex, $neighbor]);
     }
  }
 
@@ -44,10 +44,10 @@ Readonly my $WEIGHT => 'weight';
  $gw = Graph::Weighted->new();
  $gw->populate(
     {
-        0 => { label => 'A', 1 => 0.4, 3 => 0.6 }, # Vertex A with 2 edges, weight 1
-        1 => { label => 'B', 0 => 0.3, 2 => 0.7 }, # Vertex B "    2 "
-        2 => { label => 'C', 0 => 0.5, 2 => 0.5 }, # Vertex C "    2 "
-        3 => { label => 'D', 0 => 0.2, 1 => 0.8 }, # Vertex D "    2 "
+        0 => { label => 'A', 1=>0.4, 3=>0.6 }, # Vertex A with 2 edges, weight 1
+        1 => { label => 'B', 0=>0.3, 2=>0.7 }, # Vertex B "    2 "
+        2 => { label => 'C', 0=>0.5, 2=>0.5 }, # Vertex C "    2 "
+        3 => { label => 'D', 0=>0.2, 1=>0.8 }, # Vertex D "    2 "
     },
     $attr
  );
@@ -63,9 +63,9 @@ Readonly my $WEIGHT => 'weight';
 
 =head1 DESCRIPTION
 
-A C<Graph::Weighted> object is a subclass of the L<Graph> module with 
-attribute handling.  As such, all of the L<Graph> methods may be used
-as documented, but with the addition of custom weighting.
+A C<Graph::Weighted> object is a subclass of the L<Graph> module with attribute
+handling.  As such, all of the L<Graph> methods may be used, with the addition
+of custom weighting.
 
 =head1 METHODS
 
@@ -88,9 +88,16 @@ Please see L<Graph/Constructors> for the possible constructor arguments.
 
 Populate a graph with weighted nodes.
 
-For arguments, the data can be an arrayref of numeric vectors, a
-C<Math::MatrixReal> object, or a hashref of numeric edge values.  The
-C<attribute> is an optional string name, with the default "weight."
+The data can be an arrayref of numeric vectors, a C<Math::Matrix> object, a
+C<Math::MatrixReal> object, or a hashref of numeric edge values.
+
+Data given as a hash reference may also contain an optional node label, as shown
+in the SYNOPSIS.
+
+The optional edge C<attribute> argument is a string with the default "weight."
+
+Multiple attributes may be applied to a graph, thereby layering and increasing
+the overall dimension.
 
 Examples of vertices in array reference form:
 
@@ -100,9 +107,6 @@ Examples of vertices in array reference form:
   [0,1]   2 vertices and 1 edge, weight 1.
   [1,0,9] 3 vertices and 2 edges having, weight 10.
   [1,2,3] 3 vertices and 3 edges having, weight 6.
-
-Multiple attributes may be applied to a graph, thereby layering and increasing
-the overall dimension.
 
 =cut
 
@@ -118,10 +122,15 @@ sub populate {
     if ($data_ref eq 'ARRAY' || $data_ref eq 'Math::Matrix') {
         my $vertex = 0; # Initial vertex id.
         for my $neighbors (@$data) {
-            $self->_from_array(
-                $vertex, $neighbors, $attr
-            );
+            $self->_from_array($vertex, $neighbors, $attr);
             $vertex++; # Move on to the next vertex...
+        }
+    }
+    elsif ($data_ref eq 'Math::MatrixReal') {
+        my $vertex = 0;
+        for my $neighbors (@{ $data->[0] }) {
+            $self->_from_array($vertex, $neighbors, $attr);
+            $vertex++;
         }
     }
     elsif ($data_ref eq 'HASH') {
@@ -209,10 +218,10 @@ sub get_weight {
 
 =head2 get_cost()
 
-  $w = $gw->get_cost($vertex);
-  $w = $gw->get_cost($vertex, $attribute);
-  $w = $gw->get_cost(\@edge);
-  $w = $gw->get_cost(\@edge, $attribute);
+  $c = $gw->get_cost($vertex);
+  $c = $gw->get_cost($vertex, $attribute);
+  $c = $gw->get_cost(\@edge);
+  $c = $gw->get_cost(\@edge, $attribute);
 
 Return the named attribute value for the vertex or edge.
 
@@ -234,8 +243,8 @@ sub get_cost {
 
 =head2 vertex_span()
 
- my ($lightest, $heaviest) = $gw->vertex_span();
- my ($lightest, $heaviest) = $gw->vertex_span($attr);
+ ($lightest, $heaviest) = $gw->vertex_span();
+ ($lightest, $heaviest) = $gw->vertex_span($attr);
 
 Return the lightest and heaviest vertices.
 
@@ -271,8 +280,8 @@ sub vertex_span {
 
 =head2 edge_span()
 
- my ($lightest, $heaviest) = $gw->edge_span();
- my ($lightest, $heaviest) = $gw->edge_span($attr);
+ ($lightest, $heaviest) = $gw->edge_span();
+ ($lightest, $heaviest) = $gw->edge_span($attr);
 
 Return the lightest to heaviest edges.
 
@@ -310,10 +319,13 @@ sub edge_span {
 
 =head2 path_cost()
 
- my $weight = $gw->path_cost(\@vertices);
- my $weight = $gw->path_cost(\@vertices, $attr);
+ $c = $gw->path_cost(\@vertices);
+ $c = $gw->path_cost(\@vertices, $attr);
 
 Return the summed weight (or given cost attribute) of the path edges.
+
+For the cost of the shortest path, please see C<path_length> under
+L<Graph/"All-Pairs Shortest Paths (APSP)">.
 
 =cut
 
@@ -334,14 +346,66 @@ sub path_cost {
 1;
 __END__
 
-=head1 TO DO
+=head1 EXAMPLES
 
-Find the total cost beneath a node.
+=head2 Shortest Paths
+
+  my $g = Graph::Weighted->new();
+  $g->populate({
+    A => { B => 4, C => 2 },
+    B => { C => 5, D => 10 },
+    C => { E => 3 },
+    D => { F => 11 },
+    E => { D => 4 },
+    F => { },
+  });
+  my @path = $g->SP_Dijkstra( 'A', 'F' ); # A->C->E->D->F
+  print 'Dijkstra: ', join( '->', @path ), "\n";
+
+  $g = Graph::Weighted->new();
+  $g->populate({
+    S => { A =>  7, B => 6 },
+    A => { C => -3, T => 9 },
+    B => { A =>  8, C => 5, T => -4 },
+    C => { B => -5 },
+    T => { },
+  });
+  @path = $g->SP_Bellman_Ford( 'S', 'T' ); # S->A->C->B->T
+  print 'Bellman-Ford: ', join( '->', @path ), "\n";
+
+  $g = Graph::Weighted->new();
+  $g->populate({
+    1 => { 2 => 8, 4 => 1 },
+    2 => { 3 => 1 },
+    3 => { 1 => 4 },
+    4 => { 2 => 2, 3 => 9 },
+  });
+  my $apsp = $g->APSP_Floyd_Warshall();
+  @path = $apsp->path_vertices( 1, 3 ); # 1->4->2->3
+  print 'Floyd-Warshall: ', join( '->', @path ), "\n";
+
+=head2 Minimum Spanning Trees
+
+  my $g = Graph::Weighted->new( undirected => 1 );
+  $g->populate({
+        A => { B => 4, F => 2 },
+        B => { C => 6, F => 5 },
+        C => { F => 1 },
+        D => { },
+  });
+
+  my @path = $g->MST_Kruskal; # A=B,A=F,C=F
+  print 'Kruskal: ', join( '->', @path ), "\n";
+
+  @path = $g->MST_Prim; # same
+  print 'Prim: ', join( '->', @path ), "\n";
 
 =head1 SEE ALSO
 
-L<Graph>
+L<Graph>, the parent of this module
 
-The F<eg/*> and F<t/*> file sources.
+L<Graph::Easy::Weighted>, the sibling
+
+The F<eg/*> and F<t/*> file sources
 
 =cut

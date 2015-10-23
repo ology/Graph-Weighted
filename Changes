@@ -1,6 +1,24 @@
 Revision history for Graph-Weighted:
 
 {{$NEXT}}
+    - Add support for population with Math::MatrixReal objects.
+
+0.5907 2015-10-09
+    - Improved documentation.
+    - Updated code in the eg/ examples directory with MST.
+
+0.5906 2015-10-09
+    - Improved documentation ever so slightly.
+
+0.5905 2015-10-09
+    - Add a handy Shortest Paths example section to the POD.
+    - Updated code in the eg/ examples directory with other SP methods.
+
+0.5904 2015-10-05
+    - Illustrate SP_Dijkstra in eg/.
+    - Improve documentation.
+
+0.5903 2015-10-03
     - Remove the unneeded new() method.
 
 0.5902 2015-10-03
@@ -45,7 +63,7 @@ Revision history for Graph-Weighted:
     - Improved documentation.
     - Removed the confusing and unnecessary vertex_method and
       edge_method logic.
-    - Allow population with Math::MatrixReal objects.
+    - Allow population with Math::Matrix objects.
 
 0.5303 2014-08-30
     - Improved documentation!
