@@ -1,6 +1,10 @@
 Revision history for Graph-Weighted:
 
 {{$NEXT}}
+    - Allow a graph to have multiple labels.
+    - Test multiple attribute/label setting.
+
+0.6001 2016-02-01
     - Improved documentation.
     - Removed the redundant get_weight() method.
 
