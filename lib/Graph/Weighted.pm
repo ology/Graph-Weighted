@@ -97,7 +97,7 @@ Populate a graph with weighted nodes.
 The data can be an arrayref of numeric vectors, a C<Math::Matrix> object, a
 C<Math::MatrixReal> object, or a hashref of numeric edge values.
 
-Data given as a hash reference may also contain an optional node label, as shown
+Data given as a hash reference may also contain optional node labels, as shown
 in the SYNOPSIS.
 
 The optional edge C<attribute> argument is a string with the default "weight."
