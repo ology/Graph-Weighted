@@ -126,9 +126,11 @@ sub populate {
     }
     elsif ($data_ref eq 'HASH') {
         for my $vertex (keys %$data) {
-            if ( $data->{$vertex}{label} ) {
-                my $label = delete $data->{$vertex}{label};
-                $self->set_vertex_attribute($vertex, 'label', $label);
+            for my $entry ( keys %{ $data->{$vertex} } ) {
+                if ( $entry !~ /\A\d+\z/ ) {
+                    my $label = delete $data->{$vertex}{$entry};
+                    $self->set_vertex_attribute($vertex, $entry, $label);
+                }
             }
             $self->_from_hash(
                 $vertex, $data->{$vertex}, $attr
