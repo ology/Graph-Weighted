@@ -2,7 +2,7 @@ Revision history for Graph-Weighted:
 
 {{$NEXT}}
     - Allow a graph to have multiple labels.
-    - Test multiple attribute/label setting.
+    - Test hash attribute/label setting.
 
 0.6001 2016-02-01
     - Improved documentation.
