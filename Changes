@@ -1,6 +1,10 @@
 Revision history for Graph-Weighted:
 
 {{$NEXT}}
+    - Improved documentation.
+    - Removed the redundant get_weight() method.
+
+0.60  2015-10-14
     - Add support for population with Math::MatrixReal objects.
 
 0.5907 2015-10-09
