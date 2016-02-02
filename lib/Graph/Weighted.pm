@@ -7,7 +7,7 @@ our $VERSION = '0.60';
 use warnings;
 use strict;
 
-use parent qw(Graph);
+use parent qw( Graph );
 
 use Carp qw( croak );
 use Readonly;
@@ -253,11 +253,13 @@ Return the lightest and heaviest vertices.
 sub vertex_span {
     my ($self, $attr) = @_;
 
+    # Get the cost of each vertex
     my $mass = {};
     for my $vertex ( $self->vertices ) {
         $mass->{$vertex} = $self->get_cost($vertex, $attr);
     }
 
+    # Find the smallest & biggest costs
     my ($smallest, $biggest);
     for my $vertex ( keys %$mass ) {
         my $current = $mass->{$vertex};
@@ -269,6 +271,7 @@ sub vertex_span {
         }
     }
 
+    # Collect the lightest & heaviest vertices
     my ($lightest, $heaviest) = ([], []);
     for my $vertex ( keys %$mass ) {
         push @$lightest, $vertex if $mass->{$vertex} == $smallest;
@@ -290,11 +293,13 @@ Return the lightest to heaviest edges.
 sub edge_span {
     my ($self, $attr) = @_;
 
+    # Get the cost of each edge
     my $mass = {};
     for my $edge ( $self->edges ) {
         $mass->{ $edge->[0] . '_' . $edge->[1] } = $self->get_cost($edge, $attr);
     }
 
+    # Find the smallest & biggest costs
     my ($smallest, $biggest);
     for my $edge ( keys %$mass ) {
         my $current = $mass->{$edge};
@@ -306,6 +311,7 @@ sub edge_span {
         }
     }
 
+    # Collect the lightest & heaviest edges
     my ($lightest, $heaviest) = ([], []);
     for my $edge ( sort keys %$mass ) {
         my $arrayref = [ split /_/, $edge ];
