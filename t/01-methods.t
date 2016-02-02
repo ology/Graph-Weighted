@@ -71,19 +71,8 @@ $g->populate(
     },
     'x'
 );
-$g->populate(
-    {
-        0 => { bar => 'a', 1 => 0.1, 2 => 0.9 },
-        1 => { bar => 'b', 2 => 0.1, 3 => 0.9 },
-        2 => { bar => 'c', 3 => 0.1, 0 => 0.9 },
-        3 => { bar => 'd', 0 => 0.1, 1 => 0.9 },
-    },
-    'y'
-);
 cmp_ok $g->get_cost( 0, 'x' ), '==', 1, 'get_cost 0 x';
 is $g->get_vertex_attribute( 0, 'foo' ), 'A', 'get_vertex_attribute 0 foo';
-cmp_ok $g->get_cost( 0, 'y' ), '==', 1, 'get_cost 0 y';
-is $g->get_vertex_attribute( 0, 'bar' ), 'a', 'get_vertex_attribute 0 bar';
 
 done_testing();
 
