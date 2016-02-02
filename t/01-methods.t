@@ -61,6 +61,30 @@ cmp_ok( $weight, '==', 6, 'path_cost' );
 $weight = $g->path_cost( [ 0, 4 ] );
 is( $weight, undef, 'path_cost' );
 
+$g = Graph::Weighted->new();
+$g->populate(
+    {
+        0 => { foo => 'A', 3 => 0.2, 1 => 0.8 },
+        1 => { foo => 'B', 0 => 0.2, 2 => 0.8 },
+        2 => { foo => 'C', 1 => 0.2, 3 => 0.8 },
+        3 => { foo => 'D', 2 => 0.2, 0 => 0.8 },
+    },
+    'x'
+);
+$g->populate(
+    {
+        0 => { bar => 'a', 1 => 0.1, 2 => 0.9 },
+        1 => { bar => 'b', 2 => 0.1, 3 => 0.9 },
+        2 => { bar => 'c', 3 => 0.1, 0 => 0.9 },
+        3 => { bar => 'd', 0 => 0.1, 1 => 0.9 },
+    },
+    'y'
+);
+cmp_ok $g->get_cost( 0, 'x' ), '==', 1, 'get_cost 0 x';
+is $g->get_vertex_attribute( 0, 'foo' ), 'A', 'get_vertex_attribute 0 foo';
+cmp_ok $g->get_cost( 0, 'y' ), '==', 1, 'get_cost 0 y';
+is $g->get_vertex_attribute( 0, 'bar' ), 'a', 'get_vertex_attribute 0 bar';
+
 done_testing();
 
 sub _weight_of {
