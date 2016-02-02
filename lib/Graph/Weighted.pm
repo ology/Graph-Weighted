@@ -193,20 +193,6 @@ sub _from_hash {
     $self->set_vertex_attribute($vertex, $attr, $vertex_weight);
 }
 
-=head2 get_weight()
-
-  $w = $gw->get_weight($vertex);
-  $w = $gw->get_weight([$vertex, $neighbor]);
-
-Return the weight for the vertex or edge.
-
-=cut
-
-sub get_weight {
-    my $self = shift;
-    return $self->get_cost(@_);
-}
-
 =head2 get_cost()
 
   $c = $gw->get_cost($vertex);
