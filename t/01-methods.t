@@ -28,13 +28,13 @@ for my $data (@$weight_dataset) {
 
     my $g_weight = 0;
     for my $vertex ($g->vertices()) {
-        $g_weight += $g->get_weight($vertex);
+        $g_weight += $g->get_cost($vertex);
     }
     my $w = _weight_of($data);
     is $g_weight, $w, "vertex weight: $g_weight = $w";
 
     for my $e ($g->edges) {
-        my $w = $g->get_weight($e, 'weight');
+        my $w = $g->get_cost($e, 'weight');
         ok defined($w), "edge attributes: @$e = $w";
     }
 
