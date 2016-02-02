@@ -45,9 +45,9 @@ Readonly my $WEIGHT => 'weight';
  $gw->populate(
     {
         0 => { label => 'A', 1=>0.4, 3=>0.6 }, # Vertex A with 2 edges, weight 1
-        1 => { label => 'B', 0=>0.3, 2=>0.7 }, # Vertex B "    2 "
-        2 => { label => 'C', 0=>0.5, 2=>0.5 }, # Vertex C "    2 "
-        3 => { label => 'D', 0=>0.2, 1=>0.8 }, # Vertex D "    2 "
+        1 => { label => 'B', 0=>0.3, 2=>0.7 }, # "      B "    2 "
+        2 => { label => 'C', 0=>0.5, 2=>0.5 }, # "      C "    2 "
+        3 => { label => 'D', 0=>0.2, 1=>0.8 }, # "      D "    2 "
     },
     $attr
  );
@@ -98,15 +98,6 @@ The optional edge C<attribute> argument is a string with the default "weight."
 
 Multiple attributes may be applied to a graph, thereby layering and increasing
 the overall dimension.
-
-Examples of vertices in array reference form:
-
-  []      1 vertex with no edges.
-  [0]     1 vertex with no edges.
-  [1]     1 vertex and 1 edge to itself, weight 1.
-  [0,1]   2 vertices and 1 edge, weight 1.
-  [1,0,9] 3 vertices and 2 edges having, weight 10.
-  [1,2,3] 3 vertices and 3 edges having, weight 6.
 
 =cut
 
