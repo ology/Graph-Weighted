@@ -29,9 +29,9 @@ Readonly my $WEIGHT => 'weight';
  for my $vertex (sort { $a <=> $b } $gw->vertices) {
     warn sprintf "vertex: %s weight=%.2f\n",
         $vertex, $gw->get_cost($vertex);
-    for my $neighbor (sort { $a <=> $b } $gw->neighbors($vertex)) {
+    for my $successor (sort { $a <=> $b } $gw->successors($vertex)) {
         warn sprintf "\tedge to: %s weight=%.2f\n",
-            $neighbor, $gw->get_cost([$vertex, $neighbor]);
+            $successor, $gw->get_cost([$vertex, $successor]);
     }
  }
 
@@ -55,9 +55,9 @@ Readonly my $WEIGHT => 'weight';
     warn sprintf "%s vertex: %s %s=%.2f\n",
         $gw->get_vertex_attribute($vertex, 'label'),
         $vertex, $attr, $gw->get_cost($vertex, $attr);
-    for my $neighbor (sort { $a <=> $b } $gw->neighbors($vertex)) {
+    for my $successor (sort { $a <=> $b } $gw->successors($vertex)) {
         warn sprintf "\tedge to: %s %s=%.2f\n",
-            $neighbor, $attr, $gw->get_cost([$vertex, $neighbor], $attr);
+            $successor, $attr, $gw->get_cost([$vertex, $successor], $attr);
     }
  }
 
