@@ -97,13 +97,10 @@ Populate a graph with weighted nodes.
 The data can be an arrayref of numeric vectors, a C<Math::Matrix> object, a
 C<Math::MatrixReal> object, or a hashref of numeric edge values.
 
-Data given as a hash reference may also contain optional node labels, as shown
-in the SYNOPSIS.
+Data given as a hash reference may also contain multiple node labels.  Also, the
+keys need not be numeric, just unique.
 
-The optional edge C<attribute> argument is a string with the default "weight."
-
-Multiple attributes may be applied to a graph, thereby layering and increasing
-the overall dimension.
+The optional C<attribute> argument is a string with the default "weight."
 
 =cut
 
@@ -208,7 +205,8 @@ sub _from_hash {
   $c = $gw->get_cost(\@edge);
   $c = $gw->get_cost(\@edge, $attribute);
 
-Return the named attribute value for the vertex or edge.
+Return the named attribute value for the vertex or edge.  If no attribute name
+is given, the string "weight" is used.
 
 =cut
 
@@ -231,7 +229,7 @@ sub get_cost {
  ($lightest, $heaviest) = $gw->vertex_span();
  ($lightest, $heaviest) = $gw->vertex_span($attr);
 
-Return the lightest and heaviest vertices.
+Return the lightest and heaviest vertices as array references.
 
 =cut
 
@@ -271,7 +269,7 @@ sub vertex_span {
  ($lightest, $heaviest) = $gw->edge_span();
  ($lightest, $heaviest) = $gw->edge_span($attr);
 
-Return the lightest to heaviest edges.
+Return the lightest to heaviest edges as array references.
 
 =cut
 
@@ -313,7 +311,7 @@ sub edge_span {
  $c = $gw->path_cost(\@vertices);
  $c = $gw->path_cost(\@vertices, $attr);
 
-Return the summed weight (or given cost attribute) of the path edges.
+Return the summed weight (or cost attribute) of the path edges.
 
 For the cost of the shortest path, please see C<path_length> under
 L<Graph/"All-Pairs Shortest Paths (APSP)">.
