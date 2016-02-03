@@ -2,7 +2,7 @@ package Graph::Weighted;
 
 # ABSTRACT: A weighted graph implementation
 
-our $VERSION = '0.70';
+our $VERSION = '0.7001';
 
 use warnings;
 use strict;
@@ -11,6 +11,7 @@ use parent qw( Graph );
 
 use Carp qw( croak );
 use Readonly;
+
 Readonly my $WEIGHT => 'weight';
 
 =head1 SYNOPSIS
