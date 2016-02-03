@@ -270,7 +270,7 @@ sub vertex_span {
  ($lightest, $heaviest) = $gw->edge_span();
  ($lightest, $heaviest) = $gw->edge_span($attr);
 
-Return the lightest to heaviest edges as array references.
+Return the lightest and heaviest edges as array references.
 
 =cut
 
