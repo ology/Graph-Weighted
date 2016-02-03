@@ -2,6 +2,7 @@ Revision history for Graph-Weighted:
 
 {{$NEXT}}
     - Fixed multi-attribute tests.
+    - Improved documentation.
 
 0.70  2016-02-02
     - Allowed a graph to have multiple labels.
