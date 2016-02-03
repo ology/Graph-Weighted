@@ -17,7 +17,7 @@ Readonly my $WEIGHT => 'weight';
 
  use Graph::Weighted;
 
- my $gw = Graph::Weighted->new();
+ my $gw = Graph::Weighted->new;
  $gw->populate(
     [ [ 0,1,2,0,0 ], # Vertex 0 with 2 edges of weight 3
       [ 1,0,3,0,0 ], #    "   1      2 "               4
@@ -26,44 +26,44 @@ Readonly my $WEIGHT => 'weight';
       [ 0,0,0,0,0 ], #    "   4      0 "               0
     ]
  );
- for my $vertex (sort { $a <=> $b } $gw->vertices) {
+ for my $vertex ( sort { $a <=> $b } $gw->vertices ) {
     printf "vertex: %s weight=%.2f\n",
         $vertex,
         $gw->get_cost($vertex);
-    for my $successor (sort { $a <=> $b } $gw->successors($vertex)) {
+    for my $successor ( sort { $a <=> $b } $gw->successors($vertex) ) {
         printf "\tedge to: %s weight=%.2f\n",
             $successor,
-            $gw->get_cost([$vertex, $successor]);
+            $gw->get_cost( [ $vertex, $successor ] );
     }
  }
 
- my ($lightest, $heaviest) = $gw->vertex_span();
- ($lightest, $heaviest) = $gw->edge_span();
+ my ( $lightest, $heaviest ) = $gw->vertex_span;
+ ( $lightest, $heaviest ) = $gw->edge_span;
 
- my $weight = $gw->path_cost(\@vertices);
+ my $weight = $gw->path_cost( \@vertices );
 
  my $attr = 'probability';
- $gw = Graph::Weighted->new();
+ $gw = Graph::Weighted->new;
  $gw->populate(
     {
-        0 => { label => 'A', 1=>0.4, 3=>0.6 }, # Vertex A with 2 edges, weight 1
-        1 => { label => 'B', 0=>0.3, 2=>0.7 }, # "      B "    2 "
-        2 => { label => 'C', 0=>0.5, 2=>0.5 }, # "      C "    2 "
-        3 => { label => 'D', 0=>0.2, 1=>0.8 }, # "      D "    2 "
+        0 => { label => 'A', foo => 'a', 1=>0.4, 3=>0.6 },
+        1 => { label => 'B', foo => 'b', 0=>0.3, 2=>0.7 },
+        2 => { label => 'C', foo => 'c', 0=>0.5, 2=>0.5 },
+        3 => { label => 'D', foo => 'd', 0=>0.2, 1=>0.8 },
     },
     $attr
  );
- for my $vertex (sort { $a <=> $b } $gw->vertices) {
+ for my $vertex ( sort { $a <=> $b } $gw->vertices ) {
     printf "%s vertex: %s %s=%.2f\n",
-        $gw->get_vertex_attribute($vertex, 'label'),
+        $gw->get_vertex_attribute( $vertex, 'label' ),
         $vertex,
         $attr,
-        $gw->get_cost($vertex, $attr);
-    for my $successor (sort { $a <=> $b } $gw->successors($vertex)) {
+        $gw->get_cost( $vertex, $attr );
+    for my $successor ( sort { $a <=> $b } $gw->successors($vertex) ) {
         printf "\tedge to: %s %s=%.2f\n",
             $successor,
             $attr,
-            $gw->get_cost([$vertex, $successor], $attr);
+            $gw->get_cost( [ $vertex, $successor ], $attr );
     }
  }
 
