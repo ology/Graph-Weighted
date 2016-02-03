@@ -64,15 +64,11 @@ is( $weight, undef, 'path_cost' );
 $g = Graph::Weighted->new();
 $g->populate(
     {
-        0 => { foo => 'A', 3 => 0.2, 1 => 0.8 },
-        1 => { foo => 'B', 0 => 0.2, 2 => 0.8 },
-        2 => { foo => 'C', 1 => 0.2, 3 => 0.8 },
-        3 => { foo => 'D', 2 => 0.2, 0 => 0.8 },
+        0 => { foo => 'A', bar => 'a', 3 => 0.2, 1 => 0.8 },
     },
-    'x'
 );
-cmp_ok $g->get_cost( 0, 'x' ), '==', 1, 'get_cost 0 x';
 is $g->get_vertex_attribute( 0, 'foo' ), 'A', 'get_vertex_attribute 0 foo';
+is $g->get_vertex_attribute( 0, 'bar' ), 'a', 'get_vertex_attribute 0 bar';
 
 done_testing();
 
