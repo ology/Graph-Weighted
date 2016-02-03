@@ -1,8 +1,11 @@
 Revision history for Graph-Weighted:
 
 {{$NEXT}}
-    - Allow a graph to have multiple labels.
-    - Test hash attribute/label setting.
+    - Fixed multi-attribute tests.
+
+0.70  2016-02-02
+    - Allowed a graph to have multiple labels.
+    - Tested hash attribute/label setting.
 
 0.6001 2016-02-01
     - Improved documentation.
@@ -19,22 +22,22 @@ Revision history for Graph-Weighted:
     - Improved documentation ever so slightly.
 
 0.5905 2015-10-09
-    - Add a handy Shortest Paths example section to the POD.
+    - Added a handy Shortest Paths example section to the POD.
     - Updated code in the eg/ examples directory with other SP methods.
 
 0.5904 2015-10-05
     - Illustrate SP_Dijkstra in eg/.
-    - Improve documentation.
+    - Improved documentation.
 
 0.5903 2015-10-03
-    - Remove the unneeded new() method.
+    - Removed the unneeded new() method.
 
 0.5902 2015-10-03
     - Improved documentation.
     - Used Carp::croak instead of warn/die.
 
 0.5901 2015-10-03
-    - Remove the old-school "debug mode."
+    - Removed the old-school "debug mode."
     - Added missing attribute to path cost.
 
 0.59  2015-10-03
@@ -77,14 +80,14 @@ Revision history for Graph-Weighted:
     - Improved documentation!
 
 0.5301 Aug 8, 2012
-    - Improve documentation.
-    - Test for terminal values.
+    - Improved documentation.
+    - Tested for terminal values.
 
 0.53 Aug 8, 2012
     - Added dzil helper plugins to dist creation.
-    - Use (and test) both vertex and edge methods!
-    - Fix up POD.
-    - Handle terminal nodes for hash datapoints.
+    - Used (and test) both vertex and edge methods!
+    - Fixed up POD.
+    - Handled terminal nodes for hash datapoints.
 
 0.5201 May 18, 2012
     - Made get_attr() return zero if no attribute value is found.
@@ -97,7 +100,7 @@ Revision history for Graph-Weighted:
     - Improved POD.
 
 0.51 May 15, 2012
-    - Allow weighting of both edges and vertices.
+    - Allowed weighting of both edges and vertices.
 
 0.5 May 14, 2012
     - Starting over with simplified bits and dzil based distribution.
