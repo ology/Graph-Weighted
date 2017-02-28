@@ -1,6 +1,9 @@
 Revision history for Graph-Weighted:
 
 {{$NEXT}}
+    - Add eg/random
+
+0.7001 2016-02-03
     - Fixed multi-attribute tests.
     - Improved documentation.
 
