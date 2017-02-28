@@ -6,10 +6,10 @@ use warnings;
 use Graph::Weighted;
 use Math::Partition::Rand;
 
-my $attr = 'weight';
+my $attr = 'probability';
 
 my $gw = Graph::Weighted->new();
-$gw->populate( random_graph([qw( A B C D )]) );
+$gw->populate( random_graph([qw( A B C D )]), $attr );
 
 for my $vertex (sort { $a <=> $b } $gw->vertices) {
     warn sprintf "%s vertex: %s %s=%.2f\n",
