@@ -8,6 +8,7 @@ use Graph::Weighted;
 my $attr = 'probability';
 
 my $gw = Graph::Weighted->new();
+
 $gw->populate(
     {
         0 => { label => 'A', 1 => 0.4, 3 => 0.6 },
@@ -18,12 +19,4 @@ $gw->populate(
     $attr
 );
 
-for my $vertex (sort { $a <=> $b } $gw->vertices) {
-    warn sprintf "%s vertex: %s %s=%.2f\n",
-        $gw->get_vertex_attribute($vertex, 'label'),
-        $vertex, $attr, $gw->get_cost($vertex, $attr);
-    for my $successor (sort { $a <=> $b } $gw->successors($vertex)) {
-        warn sprintf "\tedge to: %s %s=%.2f\n",
-            $successor, $attr, $gw->get_cost([$vertex, $successor], $attr);
-    }
-}
+$gw->dump($attr);

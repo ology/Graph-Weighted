@@ -2,7 +2,7 @@ package Graph::Weighted;
 
 # ABSTRACT: A weighted graph implementation
 
-our $VERSION = '0.7001';
+our $VERSION = '0.8';
 
 use warnings;
 use strict;
@@ -27,16 +27,7 @@ Readonly my $WEIGHT => 'weight';
       [ 0,0,0,0,0 ], #    "   4      0 "               0
     ]
  );
- for my $vertex ( sort { $a <=> $b } $gw->vertices ) {
-    printf "vertex: %s weight=%.2f\n",
-        $vertex,
-        $gw->get_cost($vertex);
-    for my $successor ( sort { $a <=> $b } $gw->successors($vertex) ) {
-        printf "\tedge to: %s weight=%.2f\n",
-            $successor,
-            $gw->get_cost( [ $vertex, $successor ] );
-    }
- }
+ $gw->dump();
 
  my ( $lightest, $heaviest ) = $gw->vertex_span;
  ( $lightest, $heaviest ) = $gw->edge_span;
@@ -54,19 +45,7 @@ Readonly my $WEIGHT => 'weight';
     },
     $attr
  );
- for my $vertex ( sort { $a <=> $b } $gw->vertices ) {
-    printf "%s vertex: %s %s=%.2f\n",
-        $gw->get_vertex_attribute( $vertex, 'label' ),
-        $vertex,
-        $attr,
-        $gw->get_cost( $vertex, $attr );
-    for my $successor ( sort { $a <=> $b } $gw->successors($vertex) ) {
-        printf "\tedge to: %s %s=%.2f\n",
-            $successor,
-            $attr,
-            $gw->get_cost( [ $vertex, $successor ], $attr );
-    }
- }
+ $gw->dump($attr);
 
 =head1 DESCRIPTION
 
@@ -331,6 +310,33 @@ sub path_cost {
     }
 
     return $path_cost;
+}
+
+=head2 dump()
+
+  $gw->dump()
+  $gw->dump($attr)
+
+Print out the graph showing vertices, edges and costs.
+
+=cut
+
+sub dump {
+    my $self = shift;
+    my $attr = shift || 'weight';
+
+    for my $vertex ( sort { $a <=> $b } $self->vertices ) {
+        printf "vertex: %s %s=%.2f\n",
+            $vertex,
+            $attr,
+            $self->get_cost( $vertex, $attr );
+        for my $successor ( sort { $a <=> $b } $self->successors($vertex) ) {
+            printf "\tedge to: %s %s=%.2f\n",
+                $successor,
+                $attr,
+                $self->get_cost( [ $vertex, $successor ], $attr );
+        }
+    }
 }
 
 1;

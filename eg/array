@@ -3,7 +3,9 @@ use strict;
 use warnings;
 
 use Graph::Weighted;
+
 my $gw = Graph::Weighted->new();
+
 $gw->populate(
   [ [ 0, 1, 2, 0, 0 ], # Vertex 0 with 2 edges of weight 3
     [ 1, 0, 3, 0, 0 ], #    "   1      2 "               4
@@ -12,11 +14,5 @@ $gw->populate(
     [ 0, 0, 0, 0, 0 ], #    "   4      0 "               0
   ]
 );
-for my $vertex (sort { $a <=> $b } $gw->vertices) {
-    warn sprintf "vertex: %s weight=%.2f\n",
-        $vertex, $gw->get_cost($vertex);
-    for my $successor (sort { $a <=> $b } $gw->successors($vertex)) {
-        warn sprintf "\tedge to: %s weight=%.2f\n",
-            $successor, $gw->get_cost([$vertex, $successor]);
-    }
-}
+
+$gw->dump();
