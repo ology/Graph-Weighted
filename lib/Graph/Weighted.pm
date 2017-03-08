@@ -326,7 +326,9 @@ sub dump {
     my $attr = shift || 'weight';
 
     for my $vertex ( sort { $a <=> $b } $self->vertices ) {
-        printf "vertex: %s %s=%.2f\n",
+        my $label = $self->get_vertex_attribute($vertex, 'label');
+        printf "%svertex: %s %s=%.2f\n",
+            ( $label ? "$label " : '' ),
             $vertex,
             $attr,
             $self->get_cost( $vertex, $attr );
