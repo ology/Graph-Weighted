@@ -1,6 +1,9 @@
 Revision history for Graph-Weighted:
 
 {{$NEXT}}
+    - Actually allow non-numeric keys and connections.
+
+0.8   2017-03-01
     - Add eg/random
     - Add and use the dump() function.
 

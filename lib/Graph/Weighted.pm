@@ -2,7 +2,7 @@ package Graph::Weighted;
 
 # ABSTRACT: A weighted graph implementation
 
-our $VERSION = '0.8';
+our $VERSION = '0.9';
 
 use warnings;
 use strict;
@@ -38,10 +38,10 @@ Readonly my $WEIGHT => 'weight';
  $gw = Graph::Weighted->new;
  $gw->populate(
     {
-        0 => { label => 'A', foo => 'a', 1=>0.4, 3=>0.6 },
-        1 => { label => 'B', foo => 'b', 0=>0.3, 2=>0.7 },
-        2 => { label => 'C', foo => 'c', 0=>0.5, 2=>0.5 },
-        3 => { label => 'D', foo => 'd', 0=>0.2, 1=>0.8 },
+        0 => { label => 'A', 1=>0.4, 3=>0.6 },
+        1 => { label => 'B', 0=>0.3, 2=>0.7 },
+        2 => { label => 'C', 0=>0.5, 2=>0.5 },
+        3 => { label => 'D', 0=>0.2, 1=>0.8 },
     },
     $attr
  );
@@ -75,7 +75,7 @@ Please see L<Graph/Constructors> for the possible constructor arguments.
 Populate a graph with weighted nodes.
 
 The data can be an arrayref of numeric vectors, a C<Math::Matrix> object, a
-C<Math::MatrixReal> object, or a hashref of numeric edge values.
+C<Math::MatrixReal> object, or a hashref of edge values.
 
 Data given as a hash reference may also contain multiple node labels.  Also, the
 keys need not be numeric, just unique.
@@ -110,7 +110,7 @@ sub populate {
     elsif ($data_ref eq 'HASH') {
         for my $vertex (keys %$data) {
             for my $entry ( keys %{ $data->{$vertex} } ) {
-                if ( $entry !~ /\A\d+\z/ ) {
+                if ( $entry eq 'label' ) {
                     my $label = delete $data->{$vertex}{$entry};
                     $self->set_vertex_attribute($vertex, $entry, $label);
                 }
