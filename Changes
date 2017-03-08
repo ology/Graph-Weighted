@@ -3,6 +3,7 @@ Revision history for Graph-Weighted:
 {{$NEXT}}
     - Actually allow non-numeric keys and connections!
     - Display the node label, if there is one, in dump().
+    - Add the 02-alpha-keys.t test.
 
 0.8   2017-03-01
     - Add eg/random
