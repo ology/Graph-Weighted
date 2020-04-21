@@ -76,7 +76,7 @@ Please see L<Graph/Constructors> for the possible constructor arguments.
   $gw->populate(\%data_points);
   $gw->populate(\%data_points, $attribute);
 
-Populate a graph with weighted nodes.
+Populate a graph with weighted nodes and edges.
 
 The data can be an arrayref of numeric vectors, a C<Math::Matrix> object, a
 C<Math::MatrixReal> object, or a hashref of edge values.
