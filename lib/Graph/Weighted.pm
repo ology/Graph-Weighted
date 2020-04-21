@@ -305,7 +305,7 @@ L<Graph/"All-Pairs Shortest Paths (APSP)">.
 sub path_cost {
     my ($self, $path, $attr) = @_;
 
-    return unless $self->has_path( @$path );
+    return undef unless $self->has_path( @$path );
 
     my $path_cost = 0;
 
