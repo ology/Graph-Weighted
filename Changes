@@ -1,6 +1,8 @@
 Revision history for Graph-Weighted:
 
 {{$NEXT}}
+
+0.9002 2020-04-20 22:26:10
     - Improve the eg/shortest-path program.
     - Improve documentation ever so slightly.
 
