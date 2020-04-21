@@ -26,7 +26,7 @@ use constant WEIGHT => 'weight';
       [ 0,0,0,0,0 ], #    "   4      0 "               0
     ]
  );
- $gw->dump();
+ $gw->dump;
 
  my ( $lightest, $heaviest ) = $gw->vertex_span;
  ( $lightest, $heaviest ) = $gw->edge_span;
@@ -56,7 +56,7 @@ of custom weighting.
 
 =head1 METHODS
 
-=head2 new()
+=head2 new
 
   my $gw = Graph::Weighted->new;
 
@@ -64,7 +64,7 @@ Return a new C<Graph::Weighted> object.
 
 Please see L<Graph/Constructors> for the possible constructor arguments.
 
-=head2 populate()
+=head2 populate
 
   $gw->populate($matrix);
   $gw->populate($matrix, $attribute);
@@ -179,7 +179,7 @@ sub _from_hash {
     $self->set_vertex_attribute($vertex, $attr, $vertex_weight);
 }
 
-=head2 get_cost()
+=head2 get_cost
 
   $c = $gw->get_cost($vertex);
   $c = $gw->get_cost($vertex, $attribute);
@@ -205,9 +205,9 @@ sub get_cost {
     return $self->get_vertex_attribute($v, $attr) || 0;
 }
 
-=head2 vertex_span()
+=head2 vertex_span
 
- ($lightest, $heaviest) = $gw->vertex_span();
+ ($lightest, $heaviest) = $gw->vertex_span;
  ($lightest, $heaviest) = $gw->vertex_span($attr);
 
 Return the lightest and heaviest vertices as array references.
@@ -245,9 +245,9 @@ sub vertex_span {
     return $lightest, $heaviest;
 }
 
-=head2 edge_span()
+=head2 edge_span
 
- ($lightest, $heaviest) = $gw->edge_span();
+ ($lightest, $heaviest) = $gw->edge_span;
  ($lightest, $heaviest) = $gw->edge_span($attr);
 
 Return the lightest and heaviest edges as array references.
@@ -287,7 +287,7 @@ sub edge_span {
 }
 
 
-=head2 path_cost()
+=head2 path_cost
 
  $c = $gw->path_cost(\@vertices);
  $c = $gw->path_cost(\@vertices, $attr);
@@ -313,9 +313,9 @@ sub path_cost {
     return $path_cost;
 }
 
-=head2 dump()
+=head2 dump
 
-  $gw->dump()
+  $gw->dump
   $gw->dump($attr)
 
 Print out the graph showing vertices, edges and costs.
