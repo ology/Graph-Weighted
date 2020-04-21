@@ -35,10 +35,10 @@ use constant WEIGHT => 'weight';
  $gw = Graph::Weighted->new;
  $gw->populate(
     {
-        0 => { label => 'A', 1=>0.4, 3=>0.6 },
-        1 => { label => 'B', 0=>0.3, 2=>0.7 },
-        2 => { label => 'C', 0=>0.5, 2=>0.5 },
-        3 => { label => 'D', 0=>0.2, 1=>0.8 },
+        0 => { label => 'A', 1 => 0.4, 3 => 0.6 },
+        1 => { label => 'B', 0 => 0.3, 2 => 0.7 },
+        2 => { label => 'C', 0 => 0.5, 2 => 0.5 },
+        3 => { label => 'D', 0 => 0.2, 1 => 0.8 },
     },
     $attr
  );
