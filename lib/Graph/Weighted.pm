@@ -48,6 +48,9 @@ use constant WEIGHT => 'weight';
 
  $cost = $gw->path_cost( [0, 3, 1, 2], $attr );
 
+ my $tree = $g->MST_Kruskal;
+ my $sum = $g->MST_edge_sum($tree);
+
 =head1 DESCRIPTION
 
 A C<Graph::Weighted> object is a subclass of the L<Graph> module with attribute
@@ -311,6 +314,29 @@ sub path_cost {
     }
 
     return $path_cost;
+}
+
+=head2 MST_edge_sum
+
+  $sum = $gw->MST_edge_sum($tree);
+
+Compute the sum of the edges of a minimum-spanning-tree.
+
+=cut
+
+sub MST_edge_sum {
+    my ($self, $tree) = @_;
+
+    my $sum = 0;
+
+    my @edges = split /,/, $tree;
+
+    for my $edge (@edges) {
+        my @edge = split /=/, $edge;
+        $sum += $self->get_cost(\@edge);
+    }
+
+    return $sum;
 }
 
 =head2 dump
