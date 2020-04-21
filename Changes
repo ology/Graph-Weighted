@@ -1,6 +1,9 @@
 Revision history for Graph-Weighted:
 
 {{$NEXT}}
+    - Improve the eg/shortest-path program.
+
+0.9001 2020-04-20 21:58:08
     - Improve documentation.
     - Improve the eg/minimum-spanning-tree program.
     - Use constant, not Readonly.
