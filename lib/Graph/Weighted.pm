@@ -61,6 +61,7 @@ handling.  As such, all of the L<Graph> methods may be used.
 =head2 new
 
   my $gw = Graph::Weighted->new;
+  my $gw = Graph::Weighted->new(%arguments);
 
 Return a new C<Graph::Weighted> object.
 
