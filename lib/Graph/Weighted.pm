@@ -350,7 +350,7 @@ Print out the graph showing vertices, edges and costs.
 
 sub dump {
     my $self = shift;
-    my $attr = shift || 'weight';
+    my $attr = shift || WEIGHT;
 
     for my $vertex ( sort { $a <=> $b } $self->vertices ) {
         my $label = $self->get_vertex_attribute($vertex, 'label');
