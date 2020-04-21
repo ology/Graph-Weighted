@@ -1,6 +1,7 @@
 Revision history for Graph-Weighted:
 
 {{$NEXT}}
+    - Improve documentation.
 
 0.9   2017-03-07
     - Actually allow non-numeric keys and connections!
