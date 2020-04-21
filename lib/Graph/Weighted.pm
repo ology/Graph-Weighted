@@ -81,7 +81,7 @@ C<Math::MatrixReal> object, or a hashref of edge values.
 Data given as a hash reference may also contain multiple node labels.  Also, the
 keys need not be numeric, just unique.
 
-The optional C<attribute> argument is a string with the default "weight."
+The optional C<attribute> argument is a string with the default C<weight>.
 
 =cut
 
@@ -187,7 +187,7 @@ sub _from_hash {
   $c = $gw->get_cost(\@edge, $attribute);
 
 Return the named attribute value for the vertex or edge.  If no attribute name
-is given, the string "weight" is used.
+is given, the string C<weight> is used.
 
 =cut
 
