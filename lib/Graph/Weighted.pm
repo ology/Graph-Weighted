@@ -119,9 +119,7 @@ sub populate {
                     $self->set_vertex_attribute($vertex, $entry, $label);
                 }
             }
-            $self->_from_hash(
-                $vertex, $data->{$vertex}, $attr
-            );
+            $self->_from_hash( $vertex, $data->{$vertex}, $attr );
         }
     }
     else {
