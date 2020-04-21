@@ -10,9 +10,8 @@ use strict;
 use parent qw( Graph );
 
 use Carp qw( croak );
-use Readonly;
 
-Readonly my $WEIGHT => 'weight';
+use constant WEIGHT => 'weight';
 
 =head1 SYNOPSIS
 
@@ -90,7 +89,7 @@ sub populate {
     my ($self, $data, $attr) = @_;
 
     # Set the default attribute.
-    $attr ||= $WEIGHT;
+    $attr ||= WEIGHT;
 
     # What type of data are we given?
     my $data_ref = ref $data;
@@ -197,7 +196,7 @@ sub get_cost {
     croak 'ERROR: No vertex given to get_cost()' unless defined $v;
 
     # Default to weight.
-    $attr ||= $WEIGHT;
+    $attr ||= WEIGHT;
 
     # Return the edge attribute if given a list.
     return $self->get_edge_attribute(@$v, $attr) || 0 if ref $v eq 'ARRAY';
