@@ -136,7 +136,7 @@ sub _from_array {
     # Make nodes and edges.
     for my $n (0 .. @$neighbors - 1) {
         my $w = $neighbors->[$n]; # Weight of the edge to the neighbor.
-        next unless $w; # TODO Skip zero weight nodes if requested?
+        next unless $w; # Skip zero weight nodes
 
         # Add a node-node edge to the graph.
         $self->add_edge($vertex, $n);
