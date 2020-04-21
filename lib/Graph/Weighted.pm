@@ -32,8 +32,6 @@ Readonly my $WEIGHT => 'weight';
  my ( $lightest, $heaviest ) = $gw->vertex_span;
  ( $lightest, $heaviest ) = $gw->edge_span;
 
- my $weight = $gw->path_cost( \@vertices );
-
  my $attr = 'probability';
  $gw = Graph::Weighted->new;
  $gw->populate(
@@ -46,6 +44,10 @@ Readonly my $WEIGHT => 'weight';
     $attr
  );
  $gw->dump($attr);
+
+ my $cost = $gw->get_cost( [0, 1], $attr );
+
+ $cost = $gw->path_cost( [0, 3, 1, 2], $attr );
 
 =head1 DESCRIPTION
 
