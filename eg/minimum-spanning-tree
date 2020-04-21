@@ -15,11 +15,13 @@ $g->populate(
     },
 );
 
-my $path = $g->MST_Kruskal; # A=B,A=F,C=F
-print "Kruskal: $path\n";
+my $tree = $g->MST_Kruskal; # A=B,A=F,C=F
+my $sum = edge_sum($tree);
+print "Kruskal: $tree : $sum\n";
 
-$path = $g->MST_Prim; # same
-print "Prim: $path\n";
+$tree = $g->MST_Prim; # same
+$sum = edge_sum($tree);
+print "Prim: $tree : $sum\n";
 
 # https://www.hackerearth.com/practice/algorithms/graphs/minimum-spanning-tree/tutorial/
 $g = Graph::Weighted->new( undirected => 1 );
@@ -33,14 +35,21 @@ $g->populate(
     },
 );
 
-$path = $g->MST_Kruskal; # A=B,A=F,C=F
-my $sum = 0;
-my @edges = split /,/, $path;
-for my $edge (@edges) {
-    my @edge = split /=/, $edge;
-    $sum += $g->get_cost(\@edge);
-}
-print "Kruskal: $path : $sum\n";
+$tree = $g->MST_Kruskal; # A=B,A=F,C=F
+$sum = edge_sum($tree);
+print "Kruskal: $tree : $sum\n";
 
-$path = $g->MST_Prim; # same
-print "Prim: $path\n";
+$tree = $g->MST_Prim; # same
+$sum = edge_sum($tree);
+print "Prim: $tree : $sum\n";
+
+sub edge_sum {
+    my ($tree) = @_;
+    my $sum = 0;
+    my @edges = split /,/, $tree;
+    for my $edge (@edges) {
+        my @edge = split /=/, $edge;
+        $sum += $g->get_cost(\@edge);
+    }
+    return $sum;
+}
