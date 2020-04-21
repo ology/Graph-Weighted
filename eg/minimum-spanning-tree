@@ -35,7 +35,7 @@ $g->populate(
     },
 );
 
-$tree = $g->MST_Kruskal; # A=B,A=F,C=F
+$tree = $g->MST_Kruskal; # A=B,B=C,B=E,D=E
 $sum = edge_sum($tree);
 print "Kruskal: $tree : $sum\n";
 
