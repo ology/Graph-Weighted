@@ -295,9 +295,6 @@ sub edge_span {
 
 Return the summed weight (or cost attribute) of the path edges.
 
-For the cost of the shortest path, please see C<path_length> under
-L<Graph/"All-Pairs Shortest Paths (APSP)">.
-
 =cut
 
 sub path_cost {
