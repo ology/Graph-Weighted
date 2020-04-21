@@ -48,8 +48,8 @@ use constant WEIGHT => 'weight';
 
  $cost = $gw->path_cost( [0, 3, 1, 2], $attr );
 
- my $tree = $g->MST_Kruskal;
- my $sum = $g->MST_edge_sum($tree);
+ my $tree = $gw->MST_Kruskal;
+ my $sum = $gw->MST_edge_sum($tree);
 
 =head1 DESCRIPTION
 
