@@ -16,11 +16,11 @@ $g->populate(
 );
 
 my $tree = $g->MST_Kruskal; # A=B,A=F,C=F
-my $sum = edge_sum($tree);
+my $sum = $g->MST_edge_sum($tree);
 print "Kruskal: $tree : $sum\n";
 
 $tree = $g->MST_Prim; # same
-$sum = edge_sum($tree);
+$sum = $g->MST_edge_sum($tree);
 print "Prim: $tree : $sum\n";
 
 # https://www.hackerearth.com/practice/algorithms/graphs/minimum-spanning-tree/tutorial/
@@ -36,20 +36,9 @@ $g->populate(
 );
 
 $tree = $g->MST_Kruskal; # A=B,B=C,B=E,D=E
-$sum = edge_sum($tree);
+$sum = $g->MST_edge_sum($tree);
 print "Kruskal: $tree : $sum\n";
 
 $tree = $g->MST_Prim; # same
-$sum = edge_sum($tree);
+$sum = $g->MST_edge_sum($tree);
 print "Prim: $tree : $sum\n";
-
-sub edge_sum {
-    my ($tree) = @_;
-    my $sum = 0;
-    my @edges = split /,/, $tree;
-    for my $edge (@edges) {
-        my @edge = split /=/, $edge;
-        $sum += $g->get_cost(\@edge);
-    }
-    return $sum;
-}
