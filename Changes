@@ -2,6 +2,7 @@ Revision history for Graph-Weighted:
 
 {{$NEXT}}
     - Use a constant instead of a magic literal in the code.
+    - Add the eg/diagram example program.
 
 0.9100 2020-04-20 22:51:10
     - Add the ->MST_edge_sum method and use it in eg/minimum-spanning-tree.
